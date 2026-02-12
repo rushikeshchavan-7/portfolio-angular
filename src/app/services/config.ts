@@ -250,6 +250,24 @@ export const siteConfig: SiteConfig = {
     },
     {
       id: 2,
+      img: 'https://ik.imagekit.io/eddytools/ET-Website/Logo/ET-Logo-small_AL9eeqySIe.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1617814603239',
+      role: 'Web Development Intern',
+      company: 'EddyTools Tech. Solution',
+      date: 'Sep 2022 - Dec 2022',
+      desc: 'Designed and implemented dynamic, responsive web applications utilizing Node.js for server-side development. Leveraged Next.js to enhance performance and scalability. Successfully developed and deployed several websites including a comprehensive blog platform for a client.',
+      skills: ['JavaScript', 'GitHub', 'Node.js', 'GitLab', 'HTML', 'CSS'],
+    },
+    {
+      id: 3,
+      img: 'https://ik.imagekit.io/eddytools/ET-Website/Logo/ET-Logo-small_AL9eeqySIe.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1617814603239',
+      role: 'AI Development Intern',
+      company: 'EddyTools Tech. Solution',
+      date: 'Jan 2022 - May 2022',
+      desc: 'Successfully built six AI-driven projects — drone surveillance system, aruco scanner, drowsiness detection, speed detection, road sign language detector, and smart attendance system.',
+      skills: ['Python', 'OpenCV', 'Flask', 'ArucoMarkers', 'NLP', 'NumPy', 'Pandas'],
+    },
+    {
+      id: 4,
       img: 'https://www.clipartmax.com/png/middle/219-2197822_research-paper-flat-icon.png',
       role: 'Research Paper',
       company: 'Saraswati College of Engineering Kharghar',
@@ -258,7 +276,7 @@ export const siteConfig: SiteConfig = {
       skills: ['Python', 'NLP', 'XGBoost', 'SKLearn', 'Flask', 'Documentation', 'NumPy', 'Pandas'],
     },
     {
-      id: 3,
+      id: 5,
       img: 'https://rcsaraswaticollege.wordpress.com/wp-content/uploads/2021/07/exdd4674.png?w=1024',
       role: 'Vice President',
       company: 'Rotaract Club of Saraswati College',

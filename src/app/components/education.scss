@@ -115,3 +115,14 @@
     margin-bottom: 0.5rem;
   }
 }
+@media (max-width: 480px) {
+  .education { padding: 48px 16px; }
+  .section-label { font-size: 11px; margin-bottom: 12px; }
+  .section-title { font-size: 1.4rem; margin-bottom: 32px; }
+  .card { padding: 20px; border-radius: 12px; }
+  .logo-wrap { width: 40px; height: 40px; border-radius: 8px; }
+  .school { font-size: 15px; }
+  .degree { font-size: 13px; }
+  .grade { font-size: 12px; }
+  .date-badge { font-size: 11px; padding: 3px 10px; }
+}

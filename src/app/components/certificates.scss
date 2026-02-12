@@ -36,6 +36,16 @@
   }
 }
 
+@media (max-width: 480px) {
+  .certificates-section { padding: 48px 16px; }
+  .section-header h2 { font-size: 1.4rem; }
+  .section-header .subtitle { font-size: 0.85rem; }
+  .card-title { font-size: 0.85rem; }
+  .card-meta .issuer { font-size: 0.75rem; }
+  .card-meta .date { font-size: 0.7rem; }
+  .skill-tag { font-size: 0.65rem; }
+}
+
 .cert-card {
   background: var(--surface);
   border: 1px solid var(--border);

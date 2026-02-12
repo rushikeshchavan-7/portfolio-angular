@@ -18,7 +18,7 @@ export class HeroComponent {
   }
 
   get avatarSrc(): string {
-    return this.hero.image || '/HeroImage.png';
+    return this.hero.image || '/HeroImage.jpg';
   }
 
 

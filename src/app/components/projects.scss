@@ -79,5 +79,13 @@
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
+}
+@media (max-width: 480px) {
+  .projects { padding: 48px 16px; }
+  .section-label { font-size: 11px; margin-bottom: 12px; }
+  .section-title { font-size: 1.4rem; margin-bottom: 20px; }
+  .filters { gap: 8px; margin-bottom: 24px; }
+  .filter-btn { padding: 8px 16px; font-size: 12px; flex: 1; min-width: 0; text-align: center; }
 }

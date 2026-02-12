@@ -79,3 +79,13 @@
   .skills { padding: 3rem 1rem; }
   .title { font-size: 1.5rem; }
 }
+@media (max-width: 480px) {
+  .skills { padding: 48px 16px; }
+  .label { font-size: 11px; margin-bottom: 12px; }
+  .title { font-size: 1.4rem; margin-bottom: 1.5rem; }
+  .groups { gap: 1.5rem; }
+  .group-title { font-size: 11px; margin-bottom: 14px; }
+  .tags { gap: 8px; }
+  .tag { padding: 8px 14px; font-size: 13px; gap: 8px; }
+  .tag-icon { width: 18px; height: 18px; }
+}

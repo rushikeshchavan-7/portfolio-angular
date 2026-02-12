@@ -232,3 +232,16 @@
     font-size: 1.25rem;
   }
 }
+@media (max-width: 480px) {
+  .overlay { padding: 16px 12px; }
+  .card { border-radius: 12px; }
+  .close-btn { top: 12px; right: 12px; }
+  .project-image { border-radius: 8px; margin-bottom: 16px; }
+  .meta .title { font-size: 20px; }
+  .meta .date { font-size: 12px; margin-bottom: 12px; }
+  .meta .tag { font-size: 11px; padding: 3px 10px; }
+  .description { font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+  .team-section .member-name { font-size: 13px; }
+  .actions { flex-direction: column; }
+  .btn { padding: 14px 16px; }
+}

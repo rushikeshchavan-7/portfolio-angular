@@ -203,13 +203,37 @@
 }
 
 @media (max-width: 768px) {
-  .name { font-size: 40px; }
+  .hero { padding: 40px 20px 40px; }
+  .name { font-size: 40px; letter-spacing: -1.5px; }
   .avatar { width: 150px; height: 150px; }
+  .role { font-size: 15px; }
+  .description { font-size: 14px; }
   .stats { gap: 1.5rem; }
+  .orb-1 { width: 400px; height: 400px; top: -200px; }
+  .orb-2 { width: 350px; height: 350px; }
 }
 @media (max-width: 480px) {
-  .name { font-size: 32px; }
+  .hero { padding: 32px 16px 32px; }
+  .name { font-size: 32px; letter-spacing: -1px; }
   .avatar { width: 120px; height: 120px; }
-  .stats { gap: 1rem; }
-  .hero { padding: 5rem 1rem 3rem; }
+  .avatar-wrap { margin-bottom: 0.5rem; }
+  .status-badge { padding: 5px 12px; font-size: 0.7rem; }
+  .role { font-size: 13px; }
+  .description { font-size: 13px; line-height: 1.6; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .stat-value { font-size: 1.1rem; }
+  .stat-label { font-size: 0.65rem; }
+  .buttons { width: 100%; }
+  .btn { padding: 10px 20px; font-size: 13px; flex: 1; min-width: 0; }
+  .tech-stack { gap: 6px; }
+  .tech-tag { font-size: 11px; padding: 3px 10px; }
+  .scroll-hint { margin-top: 16px; }
 }
