@@ -6,18 +6,45 @@
 
   <div class="grid">
     <a
-      *ngFor="let cert of certificates"
-      [href]="cert.link"
-      target="_blank"
-      rel="noopener noreferrer"
+      *ngFor="let cert of certs"
       class="cert-card"
+      [href]="cert.link !== '#' ? cert.link : null"
+      [target]="cert.link !== '#' ? '_blank' : null"
+      rel="noopener noreferrer"
     >
-      <div class="card-image">
-        <img [src]="cert.image" [alt]="cert.title" loading="lazy" />
-        <div class="overlay">
-          <span class="view-btn">View Certificate</span>
+      <!-- Preview area -->
+      <div class="card-preview">
+        <!-- Image card: always rendered, looks intentional -->
+        <div class="image-card">
+          <img
+            [src]="cert.image || cert.fallbackImg"
+            [alt]="cert.issuer"
+            loading="lazy"
+            (error)="onImgError($event, cert)"
+          />
+          <div class="image-label">
+            <span class="image-issuer">{{ cert.issuer }}</span>
+          </div>
+        </div>
+
+        <!-- Drive iframe: only for Google Drive certs (guaranteed to work) -->
+        <iframe
+          *ngIf="cert.isDrive"
+          class="drive-frame"
+          [src]="cert.embedUrl"
+          [title]="cert.title"
+          frameborder="0"
+          loading="lazy"
+          sandbox="allow-scripts allow-same-origin allow-popups"
+        ></iframe>
+
+        <!-- Hover overlay -->
+        <div class="hover-overlay">
+          <span class="view-btn">View Certificate ↗</span>
         </div>
       </div>
+
+      <!-- Card body -->
       <div class="card-body">
         <h3 class="card-title">{{ cert.title }}</h3>
         <div class="card-meta">

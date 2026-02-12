@@ -36,15 +36,7 @@
   }
 }
 
-@media (max-width: 480px) {
-  .certificates-section { padding: 48px 16px; }
-  .section-header h2 { font-size: 1.4rem; }
-  .section-header .subtitle { font-size: 0.85rem; }
-  .card-title { font-size: 0.85rem; }
-  .card-meta .issuer { font-size: 0.75rem; }
-  .card-meta .date { font-size: 0.7rem; }
-  .skill-tag { font-size: 0.65rem; }
-}
+// ── Card ──────────────────────────────────────────────
 
 .cert-card {
   background: var(--surface);
@@ -60,50 +52,91 @@
     border-color: var(--c1);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 
-    .overlay {
-      opacity: 1;
-    }
-
-    .card-image img {
-      transform: scale(1.05);
-    }
+    .hover-overlay { opacity: 1; }
   }
 }
 
-.card-image {
+// ── Preview area ──────────────────────────────────────
+
+.card-preview {
   position: relative;
   aspect-ratio: 16 / 11;
   overflow: hidden;
-  background: var(--bgAlt);
+  background: var(--bgAlt, var(--surface));
+}
+
+// Image card — always visible as the base layer
+.image-card {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(
+    135deg,
+    var(--bgAlt, var(--surface)) 0%,
+    var(--surface) 100%
+  );
 
   img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    border-radius: 12px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
   }
 
-  .overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.25s;
+  .image-label {
+    text-align: center;
   }
 
-  .view-btn {
-    padding: 8px 20px;
-    border-radius: 6px;
-    background: var(--c1);
-    color: #fff;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
+  .image-issuer {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--textSecondary);
+    letter-spacing: 0.2px;
   }
 }
+
+// Drive iframe — sits on top of image card, only for Drive certs
+.drive-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
+  background: transparent;
+}
+
+// Hover overlay — appears on hover over the entire preview
+.hover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.view-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  background: var(--c1);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+// ── Card body ─────────────────────────────────────────
 
 .card-body {
   padding: 16px;
@@ -149,4 +182,17 @@
   background: var(--tagBg);
   color: var(--tagText);
   border: 1px solid var(--tagBorder);
+}
+
+// ── Mobile ────────────────────────────────────────────
+
+@media (max-width: 480px) {
+  .certificates-section { padding: 48px 16px; }
+  .section-header h2 { font-size: 1.4rem; }
+  .section-header .subtitle { font-size: 0.85rem; }
+  .card-title { font-size: 0.85rem; }
+  .card-meta .issuer { font-size: 0.75rem; }
+  .card-meta .date { font-size: 0.7rem; }
+  .skill-tag { font-size: 0.65rem; }
+  .image-card img { width: 44px; height: 44px; }
 }
