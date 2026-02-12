@@ -1,0 +1,28 @@
+@if (visible()) {
+  <div class="side-elements">
+    <!-- Left: Section navigation dots -->
+    <nav class="left-nav" aria-label="Section navigation">
+      <div class="track">
+        <div class="track-fill" [style.height.%]="scrollProgress() * 100"></div>
+      </div>
+      @for (section of sections(); track section.id) {
+        <button
+          type="button"
+          class="nav-dot"
+          [class.active]="$index === activeSectionIndex()"
+          [style.top.%]="getSectionTop($index)"
+          [attr.aria-label]="'Go to ' + section.label"
+          (click)="scrollToSection(section)"
+        >
+          <span class="dot-core"></span>
+          <span class="dot-label">{{ section.label }}</span>
+        </button>
+      }
+    </nav>
+
+    <!-- Right: Scroll percentage -->
+    <div class="right-indicator">
+      <span class="scroll-pct">{{ (scrollProgress() * 100).toFixed(0) }}%</span>
+    </div>
+  </div>
+}

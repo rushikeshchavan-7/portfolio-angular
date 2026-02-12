@@ -1,0 +1,25 @@
+<section class="experience" id="experience">
+  <div class="experience-inner">
+    <p class="label">Career</p>
+    <h2 class="title">Experience</h2>
+
+    <div class="cards">
+      @for (exp of experiences; track exp.id) {
+        <article class="card">
+          <img [src]="exp.img" [alt]="exp.company" class="card-logo" />
+          <div class="card-body">
+            <h3 class="card-role">{{ exp.role }}</h3>
+            <p class="card-company">{{ exp.company }}</p>
+            <span class="card-date">{{ exp.date }}</span>
+            <p class="card-desc">{{ exp.desc }}</p>
+            <div class="card-skills">
+              @for (skill of exp.skills; track skill) {
+                <span class="skill-tag">{{ skill }}</span>
+              }
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>

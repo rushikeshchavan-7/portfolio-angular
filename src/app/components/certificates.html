@@ -1,0 +1,33 @@
+<section id="certificates" class="certificates-section">
+  <div class="section-header">
+    <h2>Certificates</h2>
+    <p class="subtitle">Professional certifications and courses completed</p>
+  </div>
+
+  <div class="grid">
+    <a
+      *ngFor="let cert of certificates"
+      [href]="cert.link"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="cert-card"
+    >
+      <div class="card-image">
+        <img [src]="cert.image" [alt]="cert.title" loading="lazy" />
+        <div class="overlay">
+          <span class="view-btn">View Certificate</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">{{ cert.title }}</h3>
+        <div class="card-meta">
+          <span class="issuer">{{ cert.issuer }}</span>
+          <span class="date">{{ cert.date }}</span>
+        </div>
+        <div class="card-skills">
+          <span *ngFor="let skill of cert.skills" class="skill-tag">{{ skill }}</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>

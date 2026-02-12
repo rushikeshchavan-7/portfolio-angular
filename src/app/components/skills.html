@@ -1,0 +1,22 @@
+<section class="skills" id="skills">
+  <div class="skills-inner">
+    <p class="label">Toolkit</p>
+    <h2 class="title">Skills & Technologies</h2>
+
+    <div class="groups">
+      @for (group of skills; track group.title) {
+        <div class="group">
+          <h3 class="group-title">{{ group.title }}</h3>
+          <div class="tags">
+            @for (skill of group.skills; track skill.name) {
+              <div class="tag">
+                <img [src]="skill.image" [alt]="skill.name" class="tag-icon" />
+                <span class="tag-name">{{ skill.name }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

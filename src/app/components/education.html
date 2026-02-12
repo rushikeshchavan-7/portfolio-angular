@@ -1,0 +1,20 @@
+<section id="education" class="education">
+  <div class="education-inner">
+    <span class="section-label">Background</span>
+    <h2 class="section-title">Education</h2>
+
+    <div class="cards">
+      <article *ngFor="let edu of education" class="card">
+        <div class="logo-wrap">
+          <img [src]="edu.img" [alt]="edu.school" class="logo" />
+        </div>
+        <div class="card-content">
+          <h3 class="school">{{ edu.school }}</h3>
+          <p class="degree">{{ edu.degree }}</p>
+          <span class="grade">{{ edu.grade }}</span>
+          <span class="date-badge">{{ edu.date }}</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

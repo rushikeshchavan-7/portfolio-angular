@@ -1,0 +1,215 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 4rem;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+}
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--c1Faint) 0%, transparent 70%);
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.orb-2 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, var(--c2Faint) 0%, transparent 70%);
+  bottom: 10%;
+  right: 10%;
+}
+
+.top-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--c1), transparent);
+  opacity: 0.6;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 680px;
+}
+
+.avatar-wrap {
+  margin-bottom: 1rem;
+}
+.avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--c3);
+  background: var(--c3Faint);
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--c3);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.name {
+  font-size: 60px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.role {
+  font-size: 1.1rem;
+  color: var(--textTertiary);
+  margin-bottom: 1rem;
+
+  .c1 { color: var(--c1); }
+  .text-tertiary { color: var(--textTertiary); }
+}
+
+.description {
+  font-size: 1rem;
+  color: var(--textSecondary);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.75rem;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--textTertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: var(--btnBg);
+  color: var(--btnText);
+}
+.btn-color {
+  background: transparent;
+  color: var(--btn-color, #666);
+  border: 2px solid var(--btn-color, #666);
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.tech-tag {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+  color: var(--textTertiary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.scroll-text {
+  font-size: 0.75rem;
+  color: var(--textTertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--border), transparent);
+  border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .name { font-size: 40px; }
+  .avatar { width: 150px; height: 150px; }
+  .stats { gap: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .name { font-size: 32px; }
+  .avatar { width: 120px; height: 120px; }
+  .stats { gap: 1rem; }
+  .hero { padding: 5rem 1rem 3rem; }
+}

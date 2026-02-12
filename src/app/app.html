@@ -1,0 +1,21 @@
+<div class="body" [style.padding-top.px]="64">
+  <div class="grid-overlay" *ngIf="config.settings.showGridOverlay"></div>
+  <app-side-elements *ngIf="config.settings.showSideElements" />
+  <div class="content">
+    <app-navbar />
+    <app-hero *ngIf="config.sections.hero" />
+    <app-skills *ngIf="config.sections.skills" />
+    <app-experience *ngIf="config.sections.experience" />
+    <app-projects *ngIf="config.sections.projects" (cardClick)="openProjectModal($event)" />
+    <app-education *ngIf="config.sections.education" />
+    <app-certificates *ngIf="config.sections.certificates" />
+    <app-contact *ngIf="config.sections.contact" />
+    <app-footer />
+  </div>
+</div>
+
+<app-project-details
+  *ngIf="projectModalOpen"
+  [project]="selectedProject"
+  (closeModal)="closeProjectModal()"
+/>

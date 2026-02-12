@@ -1,0 +1,16 @@
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="copyright">{{ footer.name }} · © {{ currentYear }}</span>
+    <nav class="links">
+      <a
+        *ngFor="let link of footer.links"
+        [href]="link.url"
+        [attr.target]="link.external ? '_blank' : null"
+        [attr.rel]="link.external ? 'noopener noreferrer' : null"
+        class="link"
+      >
+        {{ link.label }}
+      </a>
+    </nav>
+  </div>
+</footer>

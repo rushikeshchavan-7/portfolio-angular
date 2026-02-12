@@ -1,0 +1,81 @@
+.skills {
+  background: var(--bgAlt);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 4rem 1.5rem;
+}
+
+.skills-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--c2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2rem;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.group-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--textTertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--textSecondary);
+  font-size: 0.9rem;
+  transition: color 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: var(--c1);
+    border-color: var(--borderHover);
+  }
+}
+
+.tag-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.tag-name {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .skills { padding: 3rem 1rem; }
+  .title { font-size: 1.5rem; }
+}

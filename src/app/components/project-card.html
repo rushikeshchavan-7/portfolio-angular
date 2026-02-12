@@ -1,0 +1,15 @@
+<article class="card" (click)="onClick()" role="button" tabindex="0">
+  <div class="image-wrap">
+    <img [src]="project.image" [alt]="project.title" class="img" />
+    <div class="gradient-overlay"></div>
+  </div>
+  <div class="content">
+    <h3 class="title">{{ project.title }}</h3>
+    <span class="date">{{ project.date }}</span>
+    <p class="description">{{ project.description }}</p>
+    <div class="tags" *ngIf="project.tags && project.tags.length">
+      <span *ngFor="let tag of visibleTags" class="tag">{{ tag }}</span>
+      <span *ngIf="overflowCount > 0" class="tag overflow">+{{ overflowCount }}</span>
+    </div>
+  </div>
+</article>

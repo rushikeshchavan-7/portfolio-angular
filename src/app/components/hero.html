@@ -1,0 +1,66 @@
+<section class="hero" id="about">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="top-line"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="avatar-wrap">
+      <img
+        [src]="avatarSrc"
+        [alt]="hero.name"
+        class="avatar"
+      />
+    </div>
+
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      {{ hero.statusBadge }}
+    </div>
+
+    <h1 class="name">{{ hero.name }}</h1>
+    <p class="role"><span class="c1">{{ hero.tagline }}</span> · <span class="text-tertiary">{{ hero.roles }}</span></p>
+    <p class="description">{{ hero.description }}</p>
+
+    <div class="stats">
+      @for (stat of hero.stats; track stat.label) {
+        <div class="stat">
+          <span class="stat-value" [style.color]="getStatColor(stat.color)">{{ stat.value }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="buttons">
+      @for (btn of hero.buttons; track btn.label) {
+        @if (btn.type === 'primary') {
+          <a [href]="btn.url" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            {{ btn.label }}
+          </a>
+        } @else {
+          <a
+            [href]="btn.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-color"
+            [style.--btn-color]="btn.color || '#666'"
+          >
+            {{ btn.label }}
+          </a>
+        }
+      }
+    </div>
+
+    <div class="tech-stack">
+      @for (tech of hero.techStack; track tech) {
+        <span class="tech-tag">{{ tech }}</span>
+      }
+    </div>
+
+    <div class="scroll-hint">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
