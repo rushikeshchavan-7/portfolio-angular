@@ -55,6 +55,11 @@
               Live Demo
             </a>
           }
+          @if (project.researchPaper) {
+            <a [href]="project.researchPaper" target="_blank" rel="noopener noreferrer" class="btn btn-research">
+              View Research Paper
+            </a>
+          }
         </div>
       </div>
     </div>

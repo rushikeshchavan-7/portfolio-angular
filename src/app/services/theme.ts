@@ -26,15 +26,15 @@ export const darkTheme: Theme = {
 };
 
 export const lightTheme: Theme = {
-  bg: '#ffffff', bgAlt: '#fafafa', surface: 'rgba(0,0,0,0.02)', surfaceHover: 'rgba(0,0,0,0.04)',
-  text: '#111111', textSecondary: 'rgba(0,0,0,0.55)', textTertiary: 'rgba(0,0,0,0.35)', textFaint: 'rgba(0,0,0,0.15)',
-  border: 'rgba(0,0,0,0.08)', borderHover: 'rgba(0,0,0,0.15)',
+  bg: '#ffffff', bgAlt: '#f5f5f7', surface: '#ffffff', surfaceHover: '#f0f0f2',
+  text: '#1d1d1f', textSecondary: '#6e6e73', textTertiary: '#86868b', textFaint: 'rgba(0,0,0,0.12)',
+  border: 'rgba(0,0,0,0.12)', borderHover: 'rgba(0,0,0,0.2)',
   c1: '#2563eb', c1Light: 'rgba(37,99,235,0.1)', c1Faint: 'rgba(37,99,235,0.05)',
   c2: '#7c3aed', c2Light: 'rgba(124,58,237,0.1)', c2Faint: 'rgba(124,58,237,0.05)',
   c3: '#059669', c3Light: 'rgba(5,150,105,0.1)', c3Faint: 'rgba(5,150,105,0.05)',
-  navBg: 'rgba(255,255,255,0.8)', btnBg: '#111', btnText: '#fff',
-  tagBg: 'rgba(0,0,0,0.02)', tagBorder: 'rgba(0,0,0,0.06)', tagText: 'rgba(0,0,0,0.45)',
-  dotColor: 'rgba(0,0,0,0.04)', shadow: 'rgba(0,0,0,0.08)', mode: 'light',
+  navBg: 'rgba(255,255,255,0.85)', btnBg: '#1d1d1f', btnText: '#fff',
+  tagBg: '#f5f5f7', tagBorder: 'rgba(0,0,0,0.1)', tagText: '#6e6e73',
+  dotColor: 'rgba(0,0,0,0.05)', shadow: 'rgba(0,0,0,0.08)', mode: 'light',
 };
 
 @Injectable({ providedIn: 'root' })

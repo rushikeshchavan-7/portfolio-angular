@@ -213,6 +213,15 @@
       background: var(--border);
     }
   }
+
+  &.btn-research {
+    background: #22c55e;
+    color: white;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
 }
 
 @media (max-width: 640px) {

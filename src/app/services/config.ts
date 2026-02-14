@@ -58,6 +58,7 @@ export interface Project {
   category: string;
   github: string;
   webapp: string;
+  researchPaper?: string;
   member?: ProjectMember[];
 }
 
@@ -394,12 +395,12 @@ export const siteConfig: SiteConfig = {
     },
     {
       id: 6,
-      title: 'National Conference',
+      title: 'National Conference — Recent Trends & Developments in Industry 4.0',
       issuer: 'Vishwaniketan iMEET',
       date: 'Mar 2024',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn0QyxLnPv2QEue2JJaEpQq4faY9tch_1lEw&s',
       link: 'https://drive.google.com/file/d/1LIgp0vFGFjllifIBmKWCfVfViwIyT8_M/view?usp=drivesdk',
-      skills: ['Research', 'Documentation', 'Presentation'],
+      skills: ['Research Paper', 'Machine Learning', 'XGBoost', 'Precision Agriculture'],
     },
     {
       id: 7,
@@ -463,15 +464,16 @@ export const siteConfig: SiteConfig = {
     },
     {
       id: 1,
-      title: 'Developer Portfolio',
-      date: 'Jan 2025',
+      title: 'Cultivate 365',
+      date: 'Mar 2024',
       description:
-        'Modern, responsive developer portfolio built with Angular 21 and TypeScript. Features dark/light theme toggle, glass-morphism UI, smooth scroll animations, section-based layout with hero, skills, experience, projects, education, certificates, and contact sections.',
-      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/portfolio-angular',
-      tags: ['Angular', 'TypeScript', 'SCSS'],
+        'AI-powered precision agriculture platform with a published research paper at the National Conference on Industry 4.0. Compared five ML algorithms — XGBoost proved most accurate. Features crop and fertilizer recommendation from soil data, leaf disease detection via ResNet9, weather dashboard, Gemini AI chatbot, and multi-language support (EN/HI/MR). PWA-enabled.',
+      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/Cultivate',
+      tags: ['Angular', 'FastAPI', 'PyTorch', 'XGBoost', 'scikit-learn', 'Google Gemini'],
       category: 'web app',
-      github: 'https://github.com/rushikeshchavan-7/portfolio-angular',
-      webapp: 'https://rushikesh-chavan-portfolio.netlify.app/',
+      github: 'https://github.com/rushikeshchavan-7/Cultivate',
+      webapp: 'https://cultivate365.netlify.app/',
+      researchPaper: 'https://www.linkedin.com/posts/rushikesh-chavan-275282211_its-been-a-year-since-i-published-my-research-activity-7309115888958431233-8x38',
     },
     {
       id: 2,
@@ -487,15 +489,15 @@ export const siteConfig: SiteConfig = {
     },
     {
       id: 3,
-      title: 'Cultivate 365',
-      date: 'Dec 2024',
+      title: 'Developer Portfolio',
+      date: 'Jan 2025',
       description:
-        'AI-powered agricultural decision support system. Features ML-based crop recommendation using soil nutrients and weather data, smart fertilizer advice, plant disease detection from leaf images using ResNet9, real-time weather dashboard, AI chatbot powered by Google Gemini, and multi-language support (English, Hindi, Marathi). PWA with offline support.',
-      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/Cultivate',
-      tags: ['Angular', 'FastAPI', 'PyTorch', 'scikit-learn', 'Tailwind CSS', 'Google Gemini'],
+        'Modern, responsive developer portfolio built with Angular 21 and TypeScript. Features dark/light theme toggle, glass-morphism UI, smooth scroll animations, section-based layout with hero, skills, experience, projects, education, certificates, and contact sections.',
+      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/portfolio-angular',
+      tags: ['Angular', 'TypeScript', 'SCSS'],
       category: 'web app',
-      github: 'https://github.com/rushikeshchavan-7/Cultivate',
-      webapp: 'https://cultivate365.netlify.app/',
+      github: 'https://github.com/rushikeshchavan-7/portfolio-angular',
+      webapp: 'https://rushikesh-chavan-portfolio.netlify.app/',
     },
   ],
 };
