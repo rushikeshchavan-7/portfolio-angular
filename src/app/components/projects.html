@@ -2,22 +2,11 @@
   <div class="projects-inner">
     <span class="section-label">Portfolio</span>
     <h2 class="section-title">Projects</h2>
-
-    <div class="filters">
-      <button
-        *ngFor="let f of filters"
-        type="button"
-        class="filter-btn"
-        [class.active]="activeFilter === f.key"
-        (click)="setFilter(f.key)"
-      >
-        {{ f.label }}
-      </button>
-    </div>
+    <p class="section-subtitle">Things I've built</p>
 
     <div class="grid">
       <app-project-card
-        *ngFor="let project of filteredProjects"
+        *ngFor="let project of projects"
         [project]="project"
         (cardClick)="onCardClick(project)"
       />
