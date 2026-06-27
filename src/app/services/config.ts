@@ -139,12 +139,12 @@ export const siteConfig: SiteConfig = {
 
   hero: {
     name: 'Rushikesh Chavan',
-    tagline: 'Junior Software Developer',
-    roles: '.NET Core · Angular · Python',
+    tagline: 'Full-Stack Software Engineer',
+    roles: '.NET • Angular • Python • AI Engineering',
     description:
-      'Junior Software Developer at CareEdge with 16+ months of professional experience (including a full-time onsite internship) building enterprise applications using .NET Core, Angular, and Python. B.E. in Computer Science (AI & ML) with Honours in Blockchain Technology.',
+      'Full-Stack Software Engineer with 2 years of experience building enterprise software for banking and financial institutions across India, Bhutan, and Sri Lanka. Experienced in .NET, Angular, Python, SQL, scalable backend systems, and AI-powered applications using LangChain, LangGraph and RAG.',
     image: null,
-    statusBadge: 'Developing Products at CareEdge',
+    statusBadge: 'Building Enterprise Banking & AI Solutions',
     stats: [
       { value: '8.29', label: 'CGPA', color: 'c1' },
       { value: '16+', label: 'Months at CareEdge', color: 'c2' },
@@ -154,7 +154,7 @@ export const siteConfig: SiteConfig = {
     buttons: [
       {
         label: 'View Resume',
-        url: 'https://drive.google.com/file/d/1040hI2AneEu1Gs1cVi0aWQ49j07ZuyJZ/view?usp=sharing',
+        url: 'https://drive.google.com/file/d/12-VrBblQ0HpDmFgEyYUg999Mc14tPlSu/view?usp=sharing',
         type: 'primary',
       },
       {
