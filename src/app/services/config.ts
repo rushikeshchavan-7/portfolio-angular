@@ -175,7 +175,7 @@ export const siteConfig: SiteConfig = {
 
   contact: {
     email: 'rushikeshchavan2002@gmail.com',
-    phone: '+91 91127 80002',
+    phone: '+91 9112678002',
     subtitle: 'Have a question or want to work together? Reach out directly.',
   },
 
