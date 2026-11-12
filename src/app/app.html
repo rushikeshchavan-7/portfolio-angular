@@ -1,21 +1,32 @@
-<div class="body" [style.padding-top.px]="64">
-  <div class="grid-overlay" *ngIf="config.settings.showGridOverlay"></div>
-  <app-side-elements *ngIf="config.settings.showSideElements" />
-  <div class="content">
-    <app-navbar />
-    <app-hero *ngIf="config.sections.hero" />
-    <app-skills *ngIf="config.sections.skills" />
-    <app-experience *ngIf="config.sections.experience" />
-    <app-projects *ngIf="config.sections.projects" (cardClick)="openProjectModal($event)" />
-    <app-education *ngIf="config.sections.education" />
-    <app-certificates *ngIf="config.sections.certificates" />
-    <app-contact *ngIf="config.sections.contact" />
-    <app-footer />
-  </div>
+<div class="backdrop" aria-hidden="true">
+  <div class="backdrop-grid"></div>
+  <div class="backdrop-aurora a1"></div>
+  <div class="backdrop-aurora a2"></div>
+  <div class="backdrop-noise"></div>
 </div>
 
-<app-project-details
-  *ngIf="projectModalOpen"
-  [project]="selectedProject"
-  (closeModal)="closeProjectModal()"
+<a class="skip-link" href="#main">Skip to content</a>
+
+<app-navbar (openPalette)="paletteOpen.set(true)" />
+
+<main id="main">
+  <app-hero />
+  <app-capabilities />
+  <app-experience />
+  <app-projects (open)="openProject($event)" />
+  <app-education />
+  <app-certificates />
+  <app-contact />
+</main>
+
+<app-footer />
+
+@if (selectedProject(); as project) {
+  <app-project-details [project]="project" (closed)="selectedProject.set(null)" />
+}
+
+<app-command-palette
+  [open]="paletteOpen()"
+  (openChange)="paletteOpen.set($event)"
+  (openProject)="openProject($event)"
 />
