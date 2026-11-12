@@ -1,125 +1,192 @@
-.experience {
-  padding: 4rem 1.5rem;
+:host { display: block; }
+
+.timeline {
+  --rail-x: 200px;
+  position: relative;
+
+  @media (max-width: 820px) { --rail-x: 7px; }
 }
 
-.experience-inner {
-  max-width: 720px;
-  margin: 0 auto;
+.items {
+  list-style: none;
+  display: grid;
+  gap: 22px;
 }
 
-.label {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--c1);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
+.rail {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: var(--rail-x);
+  width: 1px;
+  background: var(--border);
 }
 
-.title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 2rem;
+.rail-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  transform-origin: top;
+  transform: scaleY(0);
+  box-shadow: 0 0 12px var(--accent);
 }
 
-.cards {
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(var(--rail-x) - 28px) 1fr;
+  gap: 56px;
+
+  @media (max-width: 820px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-left: 34px;
+  }
+}
+
+.node {
+  position: absolute;
+  left: calc(var(--rail-x) - 6px);
+  top: 30px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 5px var(--bg), 0 0 18px var(--accent);
+  z-index: 1;
+
+  .item[data-type='research'] & { border-color: var(--accent-2); box-shadow: 0 0 0 5px var(--bg), 0 0 18px var(--accent-2); }
+  .item[data-type='leadership'] & { border-color: var(--accent-3); box-shadow: 0 0 0 5px var(--bg), 0 0 18px var(--accent-3); }
+
+  @media (max-width: 820px) { top: 4px; }
+}
+
+.when {
+  padding-top: 24px;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-}
+  align-items: flex-end;
+  gap: 6px;
+  text-align: right;
+  font-size: 12.5px;
+  color: var(--text-muted);
 
-.card {
-  display: flex;
-  gap: 1.25rem;
-  padding: 1.5rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  .type {
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--shadow);
-    border-color: var(--borderHover);
+  @media (max-width: 820px) {
+    padding-top: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
   }
 }
 
-.card-logo {
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  object-fit: cover;
+.entry {
+  padding: clamp(20px, 2.6vw, 28px);
+
+  &:hover { border-color: var(--border-strong); }
+}
+
+.entry-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
   flex-shrink: 0;
-}
-
-.card-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.card-role {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 0.25rem;
-}
-
-.card-company {
-  font-size: 0.95rem;
-  color: var(--textSecondary);
-  margin-bottom: 0.5rem;
-}
-
-.card-date {
-  display: inline-block;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.6rem;
-  background: var(--tagBg);
+  border-radius: 13px;
+  background: var(--logo-bg);
   border: 1px solid var(--border);
-  border-radius: 9999px;
-  color: var(--textTertiary);
-  margin-bottom: 0.75rem;
+  overflow: hidden;
+
+  img { width: 30px; height: 30px; object-fit: contain; }
 }
 
-.card-desc {
-  font-size: 0.9rem;
-  color: var(--textSecondary);
-  line-height: 1.5;
-  margin-bottom: 0.75rem;
+.role {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 21px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
-.card-skills {
+.company {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.summary {
+  margin-top: 16px;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.highlights {
+  list-style: none;
+  margin-top: 14px;
+  display: grid;
+  gap: 9px;
+
+  li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 0.62em;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      transform: rotate(45deg);
+      background: var(--grad);
+    }
+  }
+}
+
+.awards {
+  margin-top: 18px;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
-.skill-tag {
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  background: var(--c2Faint);
-  color: var(--c2);
-  border-radius: 6px;
+.award {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+
+  :host-context([data-theme='light']) & { color: #b45309; }
 }
 
-@media (max-width: 768px) {
-  .experience { padding: 3rem 1rem; }
-  .title { font-size: 1.5rem; margin-bottom: 40px; }
-  .card {
-    flex-direction: column;
-    gap: 1rem;
-  }
-}
-@media (max-width: 480px) {
-  .experience { padding: 48px 16px; }
-  .label { font-size: 11px; margin-bottom: 12px; }
-  .title { font-size: 1.4rem; margin-bottom: 32px; }
-  .card { padding: 20px; border-radius: 12px; }
-  .card-logo { width: 40px; height: 40px; border-radius: 8px; }
-  .card-role { font-size: 15px; }
-  .card-company { font-size: 13px; }
-  .card-date { font-size: 11px; padding: 3px 10px; }
-  .card-desc { font-size: 13px; }
-  .skill-tag { font-size: 11px; padding: 3px 10px; }
+.tags {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }

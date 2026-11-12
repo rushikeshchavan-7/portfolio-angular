@@ -1,54 +1,41 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { siteConfig, Project } from '../services/config';
-import { ProjectCardComponent } from './project-card';
+import { Component, computed, output, signal } from '@angular/core';
+import { siteConfig, Project, ProjectKind } from '../services/config';
+import { IconComponent } from '../shared/icon';
+import { RevealDirective } from '../shared/reveal.directive';
+import { SpotlightDirective } from '../shared/spotlight.directive';
 
-type FilterToggle = 'all' | 'web' | 'mobile' | 'ml';
+type Filter = 'all' | ProjectKind;
 
 @Component({
   selector: 'app-projects',
-  standalone: true,
-  imports: [CommonModule, ProjectCardComponent],
+  imports: [IconComponent, RevealDirective, SpotlightDirective],
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
 })
 export class ProjectsComponent {
-  @Output() cardClick = new EventEmitter<Project>();
+  readonly open = output<Project>();
 
-  activeFilter: FilterToggle = 'all';
-  projects = siteConfig.projects;
+  readonly featured = siteConfig.projects.find((p) => p.featured) ?? null;
+  private readonly rest = siteConfig.projects.filter((p) => !p.featured);
 
-  readonly filters: { key: FilterToggle; label: string }[] = [
+  readonly filters: { key: Filter; label: string }[] = [
     { key: 'all', label: 'All' },
-    { key: 'web', label: 'Web' },
-    { key: 'mobile', label: 'Mobile' },
-    { key: 'ml', label: 'ML' },
+    { key: 'ai', label: 'AI' },
+    { key: 'fullstack', label: 'Full-stack' },
+    { key: 'tools', label: 'Tools' },
   ];
 
-  get filteredProjects(): Project[] {
-    if (this.activeFilter === 'all') return this.projects;
-    return this.projects.filter((p) => this.matchesFilter(p, this.activeFilter));
+  readonly filter = signal<Filter>('all');
+  readonly list = computed(() => {
+    const f = this.filter();
+    return f === 'all' ? this.rest : this.rest.filter((p) => p.kinds.includes(f));
+  });
+
+  count(key: Filter): number {
+    return key === 'all' ? this.rest.length : this.rest.filter((p) => p.kinds.includes(key)).length;
   }
 
-  private matchesFilter(project: Project, filter: FilterToggle): boolean {
-    const cat = project.category.toLowerCase();
-    switch (filter) {
-      case 'web':
-        return cat.includes('web');
-      case 'mobile':
-        return cat.includes('android') || cat.includes('mobile');
-      case 'ml':
-        return cat.includes('machine') || cat.includes('ml');
-      default:
-        return true;
-    }
-  }
-
-  setFilter(key: FilterToggle): void {
-    this.activeFilter = key;
-  }
-
-  onCardClick(project: Project): void {
-    this.cardClick.emit(project);
+  imgError(e: Event): void {
+    (e.target as HTMLImageElement).style.opacity = '0';
   }
 }

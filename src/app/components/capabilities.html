@@ -1,0 +1,69 @@
+<section class="section" id="capabilities">
+  <div class="container">
+    <header class="section-head" reveal>
+      <span class="eyebrow">Capabilities</span>
+      <h2 class="h2">Jack of all trades.<br /><span class="grad-text">Mastering them all.</span></h2>
+      <p class="lead">
+        AI sits at the centre of how I design software — and I own every layer around it, so the
+        model, the API, the interface and the infrastructure fit together as one product.
+      </p>
+    </header>
+
+    <div class="bento">
+      @for (c of caps; track c.id; let i = $index) {
+        <article
+          class="card tile"
+          [attr.data-size]="c.size"
+          [style.--tile-accent]="c.accent"
+          spotlight
+          reveal
+          [revealDelay]="i * 70"
+        >
+          <div class="tile-top">
+            <span class="tile-icon"><app-icon [name]="c.icon" [size]="20" /></span>
+            <span class="mono kicker">{{ '0' + (i + 1) }} · {{ c.kicker }}</span>
+          </div>
+
+          <h3 class="tile-title">{{ c.title }}</h3>
+          <p class="tile-summary">{{ c.summary }}</p>
+
+          @if (c.size === 'xl') {
+            <ol class="pipeline" aria-label="Retrieval-augmented generation pipeline">
+              @for (step of pipeline; track step; let last = $last) {
+                <li [class.final]="last"><span>{{ step }}</span></li>
+              }
+            </ol>
+          }
+
+          @if (c.examples?.length) {
+            <ul class="examples">
+              @for (ex of c.examples; track ex.title) {
+                <li>
+                  <span class="ex-title">{{ ex.title }}</span>
+                  <span class="ex-detail">{{ ex.detail }}</span>
+                  <span class="ex-proj mono">{{ ex.project }}</span>
+                </li>
+              }
+            </ul>
+          }
+
+          <ul class="skills">
+            @for (s of c.skills; track s.name) {
+              <li class="chip skill">
+                <span class="logo"><img [src]="s.image" [alt]="" loading="lazy" (error)="hideBroken($event)" /></span>
+                {{ s.name }}
+              </li>
+            }
+          </ul>
+
+          <p class="shipped mono">
+            <span class="faint">shipped in</span>
+            @for (p of c.shippedIn; track p; let last = $last) {
+              <span class="ship">{{ p }}</span>@if (!last) {<span class="faint">,</span>}
+            }
+          </p>
+        </article>
+      }
+    </div>
+  </div>
+</section>

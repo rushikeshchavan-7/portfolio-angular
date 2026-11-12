@@ -1,15 +1,152 @@
-<section id="projects" class="projects">
-  <div class="projects-inner">
-    <span class="section-label">Portfolio</span>
-    <h2 class="section-title">Projects</h2>
-    <p class="section-subtitle">Things I've built</p>
+<section class="section" id="projects">
+  <div class="container">
+    <header class="section-head" reveal>
+      <span class="eyebrow">Selected work</span>
+      <h2 class="h2">Products with <span class="grad-text">intelligence built in.</span></h2>
+      <p class="lead">Shipped end-to-end — model, backend, interface and deployment.</p>
+    </header>
+
+    @if (featured; as f) {
+      <article class="card featured" spotlight reveal>
+        <div class="f-copy">
+          <div class="f-meta">
+            <span class="new-badge"><app-icon name="sparkle" [size]="13" /> New · Featured</span>
+            <span class="mono faint">{{ f.date }}</span>
+          </div>
+
+          <h3 class="f-title">{{ f.title }}</h3>
+          <p class="f-tagline grad-text">{{ f.tagline }}</p>
+          <p class="f-desc">{{ f.description }}</p>
+
+          <ul class="f-points">
+            @for (h of f.highlights.slice(0, 3); track h) {
+              <li>{{ h }}</li>
+            }
+          </ul>
+
+          <div class="tags">
+            @for (t of f.tags; track t) {
+              <span class="chip">{{ t }}</span>
+            }
+          </div>
+
+          <div class="f-actions">
+            @if (f.webapp) {
+              <a class="btn btn-primary" [href]="f.webapp" target="_blank" rel="noopener noreferrer">
+                Live app <app-icon name="arrow-up-right" [size]="15" />
+              </a>
+            }
+            @if (f.github) {
+              <a class="btn btn-ghost" [href]="f.github" target="_blank" rel="noopener noreferrer">
+                <app-icon name="github" [size]="15" /> Code
+              </a>
+            }
+            <button type="button" class="btn btn-ghost" (click)="open.emit(f)">Case study</button>
+          </div>
+        </div>
+
+        <!-- Illustrative product mock (sample data) -->
+        <div class="f-visual" aria-hidden="true">
+          <div class="mock">
+            <div class="mock-bar">
+              <span class="dots"><i></i><i></i><i></i></span>
+              <span class="mono">credit-file / sample borrower</span>
+            </div>
+
+            <div class="mock-body">
+              <div class="mock-row">
+                <div class="gauge">
+                  <svg viewBox="0 0 120 70">
+                    <defs>
+                      <linearGradient id="gg" x1="0" x2="1">
+                        <stop offset="0" stop-color="#34d399" />
+                        <stop offset="0.55" stop-color="#fbbf24" />
+                        <stop offset="1" stop-color="#f87171" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M10 62a50 50 0 0 1 100 0" stroke="var(--border-strong)" stroke-width="9" fill="none" stroke-linecap="round" />
+                    <path class="gauge-arc" d="M10 62a50 50 0 0 1 100 0" stroke="url(#gg)" stroke-width="9" fill="none" stroke-linecap="round" pathLength="100" />
+                  </svg>
+                  <div class="gauge-label">
+                    <span class="grade">B+</span>
+                    <span class="mono">risk grade</span>
+                  </div>
+                </div>
+
+                <ul class="checks mono">
+                  <li><span class="ok">✓</span> GST ↔ bank reconciled</li>
+                  <li><span class="ok">✓</span> Sanctions screening clear</li>
+                  <li><span class="warn">!</span> 1 policy threshold flagged</li>
+                  <li><span class="ok">✓</span> Credit memo drafted</li>
+                </ul>
+              </div>
+
+              <div class="chat">
+                <p class="q">What is driving the risk grade?</p>
+                <p class="a">
+                  Receivables grew faster than revenue and one covenant is near its limit
+                  <sup>[1]</sup><sup>[2]</sup>. Liquidity remains within policy.
+                </p>
+                <p class="cite mono"><span>[1] balance-sheet.pdf</span><span>[2] policy · rule 4.2</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="f-glow"></div>
+        </div>
+      </article>
+    }
+
+    <div class="toolbar" reveal>
+      <h3 class="more-title">More projects</h3>
+      <div class="filters" role="tablist" aria-label="Filter projects">
+        @for (fl of filters; track fl.key) {
+          <button
+            type="button"
+            role="tab"
+            class="filter"
+            [class.active]="filter() === fl.key"
+            [attr.aria-selected]="filter() === fl.key"
+            (click)="filter.set(fl.key)"
+          >
+            {{ fl.label }} <span class="count mono">{{ count(fl.key) }}</span>
+          </button>
+        }
+      </div>
+    </div>
 
     <div class="grid">
-      <app-project-card
-        *ngFor="let project of projects"
-        [project]="project"
-        (cardClick)="onCardClick(project)"
-      />
+      @for (p of list(); track p.id; let i = $index) {
+        <article class="card proj" spotlight reveal [revealDelay]="i * 60">
+          <button type="button" class="proj-hit" (click)="open.emit(p)" [attr.aria-label]="'Open ' + p.title + ' details'"></button>
+          <div class="thumb">
+            <img [src]="p.image" [alt]="" loading="lazy" (error)="imgError($event)" />
+          </div>
+          <div class="proj-body">
+            <div class="proj-meta mono">
+              <span>{{ p.date }}</span>
+              <span class="kinds">
+                @for (k of p.kinds; track k) { <span class="kind" [attr.data-kind]="k">{{ k === 'ai' ? 'AI' : k }}</span> }
+              </span>
+            </div>
+            <h4 class="proj-title">
+              {{ p.title }}
+              <app-icon name="arrow-up-right" [size]="17" class="arrow" />
+            </h4>
+            <p class="proj-tagline">{{ p.tagline }}</p>
+            <p class="proj-desc">{{ p.description }}</p>
+            <div class="tags">
+              @for (t of p.tags.slice(0, 4); track t) {
+                <span class="chip">{{ t }}</span>
+              }
+              @if (p.tags.length > 4) {
+                <span class="chip">+{{ p.tags.length - 4 }}</span>
+              }
+            </div>
+          </div>
+        </article>
+      } @empty {
+        <p class="empty">Nothing here yet.</p>
+      }
     </div>
   </div>
 </section>

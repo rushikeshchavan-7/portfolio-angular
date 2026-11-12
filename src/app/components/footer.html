@@ -1,16 +1,21 @@
 <footer class="footer">
-  <div class="footer-inner">
-    <span class="copyright">{{ footer.name }} · © {{ currentYear }}</span>
-    <nav class="links">
-      <a
-        *ngFor="let link of footer.links"
-        [href]="link.url"
-        [attr.target]="link.external ? '_blank' : null"
-        [attr.rel]="link.external ? 'noopener noreferrer' : null"
-        class="link"
-      >
-        {{ link.label }}
-      </a>
+  <div class="container inner">
+    <div class="left">
+      <span class="brand">{{ name }}</span>
+      <span class="faint">AI-first engineer · © {{ year }}</span>
+    </div>
+    <nav class="links" aria-label="Social">
+      @for (l of links; track l.label) {
+        <a
+          [href]="l.url"
+          [attr.target]="l.external ? '_blank' : null"
+          [attr.rel]="l.external ? 'noopener noreferrer' : null"
+        >{{ l.label }}</a>
+      }
+      <button type="button" class="top" (click)="toTop()" aria-label="Back to top">
+        <app-icon name="arrow-up-right" [size]="15" />
+      </button>
     </nav>
   </div>
+  <div class="wordmark" aria-hidden="true">{{ name.split(' ')[0] }}</div>
 </footer>

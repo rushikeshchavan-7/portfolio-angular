@@ -1,66 +1,105 @@
 <section class="hero" id="about">
-  <div class="hero-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="top-line"></div>
-  </div>
+  <app-neural-field />
 
-  <div class="hero-content">
-    <div class="avatar-wrap">
-      <img
-        [src]="avatarSrc"
-        [alt]="hero.name"
-        class="avatar"
-      />
-    </div>
+  <div class="container hero-grid">
+    <div class="copy">
+      <div class="badge rise" style="--d: 0ms">
+        <span class="pulse"></span>
+        {{ hero.statusBadge }}
+        <span class="sep"></span>
+        <span class="faint">{{ hero.location }}</span>
+      </div>
 
-    <div class="status-badge">
-      <span class="status-dot"></span>
-      {{ hero.statusBadge }}
-    </div>
+      <p class="hello rise" style="--d: 80ms">Hi, I'm {{ hero.firstName }} —</p>
 
-    <h1 class="name">{{ hero.name }}</h1>
-    <p class="role"><span class="c1">{{ hero.tagline }}</span> · <span class="text-tertiary">{{ hero.roles }}</span></p>
-    <p class="description">{{ hero.description }}</p>
+      <h1 class="title rise" style="--d: 140ms">
+        <span class="grad-text">{{ hero.headline }}</span><br />
+        <span class="title-2">across the entire stack.</span>
+      </h1>
 
-    <div class="stats">
-      @for (stat of hero.stats; track stat.label) {
-        <div class="stat">
-          <span class="stat-value" [style.color]="getStatColor(stat.color)">{{ stat.value }}</span>
-          <span class="stat-label">{{ stat.label }}</span>
-        </div>
-      }
-    </div>
+      <p class="motto rise" style="--d: 220ms">
+        <span class="mono slash">//</span> {{ hero.motto }}
+      </p>
 
-    <div class="buttons">
-      @for (btn of hero.buttons; track btn.label) {
-        @if (btn.type === 'primary') {
-          <a [href]="btn.url" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            {{ btn.label }}
-          </a>
-        } @else {
+      <p class="typer rise" style="--d: 280ms" aria-live="off">
+        <span class="mono prompt">I build</span>
+        <span class="typed">{{ typed() }}</span><span class="caret" aria-hidden="true"></span>
+      </p>
+
+      <p class="desc rise" style="--d: 340ms">{{ hero.description }}</p>
+
+      <div class="cta rise" style="--d: 420ms">
+        @for (b of hero.buttons; track b.label) {
           <a
-            [href]="btn.url"
+            class="btn"
+            [class.btn-primary]="b.kind === 'primary'"
+            [class.btn-ghost]="b.kind === 'ghost'"
+            [href]="b.url"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-color"
-            [style.--btn-color]="btn.color || '#666'"
           >
-            {{ btn.label }}
+            @if (b.icon) { <app-icon [name]="b.icon" [size]="16" /> }
+            {{ b.label }}
           </a>
         }
-      }
+        <button type="button" class="btn btn-ghost see-work" (click)="go('projects')">
+          See work <app-icon name="arrow-right" [size]="15" />
+        </button>
+      </div>
     </div>
 
-    <div class="tech-stack">
-      @for (tech of hero.techStack; track tech) {
-        <span class="tech-tag">{{ tech }}</span>
-      }
-    </div>
+    <div class="visual rise" style="--d: 260ms">
+      <div class="portrait">
+        <div class="ring" aria-hidden="true"></div>
+        <img [src]="hero.image" [alt]="hero.name" width="420" height="392" fetchpriority="high" />
+        <div class="portrait-shade" aria-hidden="true"></div>
+        <div class="float-chip chip-ai"><app-icon name="sparkle" [size]="14" /> AI-first</div>
+        <div class="float-chip chip-stack"><app-icon name="layout" [size]="14" /> Full-stack</div>
+      </div>
 
-    <div class="scroll-hint">
-      <span class="scroll-text">Scroll</span>
-      <div class="scroll-line"></div>
+      <div class="console" role="img" aria-label="Illustration: an agent planning an end-to-end AI product across model, API, UI, data and deployment layers">
+        <div class="console-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="mono console-title">rushikesh.agent</span>
+          <span class="mono live" [class.on]="!consoleDone()">● {{ consoleDone() ? 'done' : 'running' }}</span>
+        </div>
+        <div class="console-body mono">
+          <p class="cmd"><span class="accent">›</span> plan <span class="str">"ship an AI product end-to-end"</span></p>
+          @for (l of consoleLines; track l.key; let i = $index) {
+            <p class="line" [class.shown]="i < shownLines()">
+              <span class="ok">✓</span>
+              <span class="k">{{ l.key }}</span>
+              <span class="v">{{ l.value }}</span>
+            </p>
+          }
+          <p class="line done" [class.shown]="consoleDone()">
+            <span class="ok">●</span><span class="k">status</span><span class="v hl">shipped to production</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <dl class="stats" #stats>
+      @for (s of hero.stats; track s.label; let i = $index) {
+        <div class="stat">
+          <dt class="stat-label">{{ s.label }}</dt>
+          <dd class="stat-value">{{ formatStat(i) }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+
+  <div class="marquee" aria-label="Technologies I work with">
+    <div class="marquee-track">
+      @for (round of [0, 1]; track round) {
+        <ul class="marquee-list" [attr.aria-hidden]="round === 1 ? 'true' : null">
+          @for (t of marquee; track t) {
+            <li><span class="diamond"></span>{{ t }}</li>
+          }
+        </ul>
+      }
     </div>
   </div>
 </section>

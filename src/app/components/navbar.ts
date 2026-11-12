@@ -1,48 +1,53 @@
-import { Component, HostListener, signal, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { siteConfig } from '../services/config';
+import { Component, computed, inject, output, signal } from '@angular/core';
 import { ThemeService } from '../services/theme';
+import { siteConfig } from '../services/config';
+import { IconComponent } from '../shared/icon';
+import { NAV_SECTIONS, scrollToSection } from '../shared/nav';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [IconComponent],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
+  host: {
+    '(window:scroll)': 'onScroll()',
+    '(window:resize)': 'onScroll()',
+  },
 })
 export class NavbarComponent {
-  themeService = inject(ThemeService);
+  readonly theme = inject(ThemeService);
+  readonly openPalette = output<void>();
 
-  scrollY = signal(0);
-  mobileOpen = signal(false);
+  readonly sections = NAV_SECTIONS.filter((s) => s.id !== 'about');
+  readonly name = siteConfig.hero.name;
+  readonly isMac = /Mac|iPhone|iPad/.test(navigator.platform);
 
-  heroName = siteConfig.hero.name;
-  navSections = [
-    siteConfig.sections.hero ? { id: 'about', label: 'About' } : null,
-    siteConfig.sections.skills ? { id: 'skills', label: 'Skills' } : null,
-    siteConfig.sections.experience ? { id: 'experience', label: 'Experience' } : null,
-    siteConfig.sections.projects ? { id: 'projects', label: 'Projects' } : null,
-    siteConfig.sections.education ? { id: 'education', label: 'Education' } : null,
-    siteConfig.sections.certificates ? { id: 'certificates', label: 'Certificates' } : null,
-    siteConfig.sections.contact ? { id: 'contact', label: 'Contact' } : null,
-  ].filter(Boolean) as { id: string; label: string }[];
+  readonly scrollY = signal(0);
+  readonly progress = signal(0);
+  readonly active = signal('about');
+  readonly mobileOpen = signal(false);
+  readonly scrolled = computed(() => this.scrollY() > 12);
 
-  @HostListener('window:scroll')
   onScroll(): void {
-    this.scrollY.set(window.scrollY);
+    const y = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    this.scrollY.set(y);
+    this.progress.set(max > 0 ? Math.min(1, y / max) : 0);
+
+    const probe = y + window.innerHeight * 0.35;
+    let current = 'about';
+    for (const s of NAV_SECTIONS) {
+      const el = document.getElementById(s.id);
+      if (el && el.offsetTop <= probe) current = s.id;
+    }
+    // Last section is short; treat bottom of page as contact.
+    if (max > 0 && y >= max - 4) current = NAV_SECTIONS[NAV_SECTIONS.length - 1].id;
+    this.active.set(current);
   }
 
-  scrollTo(id: string): void {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  go(id: string, e?: Event): void {
+    e?.preventDefault();
+    scrollToSection(id);
     this.mobileOpen.set(false);
-  }
-
-  toggleTheme(): void {
-    this.themeService.toggle();
-  }
-
-  toggleMobile(): void {
-    this.mobileOpen.update(v => !v);
   }
 }

@@ -1,43 +1,40 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Component, computed, signal } from '@angular/core';
 import { siteConfig, Certificate } from '../services/config';
+import { IconComponent } from '../shared/icon';
+import { RevealDirective } from '../shared/reveal.directive';
+import { SpotlightDirective } from '../shared/spotlight.directive';
 
-interface CertView extends Certificate {
-  embedUrl: SafeResourceUrl | null;
-  isDrive: boolean;
-  fallbackImg: string;
-}
+const AI_KEYWORDS = ['AI', 'LLMs', 'LangGraph', 'LangChain', 'AI Agents', 'Prompt Engineering', 'Machine Learning'];
 
 @Component({
   selector: 'app-certificates',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [IconComponent, RevealDirective, SpotlightDirective],
   templateUrl: './certificates.html',
   styleUrl: './certificates.scss',
 })
 export class CertificatesComponent {
-  certs: CertView[];
+  private readonly all = siteConfig.certificates;
+  readonly expanded = signal(false);
+  readonly initial = 6;
+  readonly shown = computed<Certificate[]>(() => (this.expanded() ? this.all : this.all.slice(0, this.initial)));
+  readonly total = this.all.length;
 
-  constructor(private sanitizer: DomSanitizer) {
-    this.certs = siteConfig.certificates.map((cert) => {
-      const driveMatch = cert.link.match(/drive\.google\.com\/file\/d\/([^/]+)/);
-      return {
-        ...cert,
-        isDrive: !!driveMatch,
-        embedUrl: driveMatch
-          ? this.sanitizer.bypassSecurityTrustResourceUrl(
-              `https://drive.google.com/file/d/${driveMatch[1]}/preview`
-            )
-          : null,
-        // Auto-generated avatar from issuer name — used if image fails or is missing
-        fallbackImg: `https://ui-avatars.com/api/?name=${encodeURIComponent(cert.issuer)}&size=128&background=3b82f6&color=fff&bold=true&rounded=true`,
-      };
-    });
+  isAi(c: Certificate): boolean {
+    return c.skills.some((s) => AI_KEYWORDS.includes(s));
   }
 
-  onImgError(event: Event, cert: CertView): void {
-    // If the provided image URL fails, swap to auto-generated avatar
-    (event.target as HTMLImageElement).src = cert.fallbackImg;
+  initials(issuer: string): string {
+    return issuer
+      .split(/\s+/)
+      .filter((w) => /^[A-Za-z]/.test(w))
+      .slice(0, 2)
+      .map((w) => w[0].toUpperCase())
+      .join('');
+  }
+
+  imgError(e: Event): void {
+    const img = e.target as HTMLImageElement;
+    img.style.display = 'none';
+    img.parentElement?.classList.add('fallback');
   }
 }
