@@ -525,7 +525,7 @@ export const siteConfig: SiteConfig = {
       tags: ['Angular 21', 'TypeScript', 'Signals', 'SCSS', 'Canvas'],
       kinds: ['tools'],
       github: 'https://github.com/rushikeshchavan-7/portfolio-angular',
-      webapp: 'https://rushikesh-chavan-portfolio.netlify.app/',
+      webapp: 'https://rushikesh-chavan.vercel.app/',
     },
   ],
 
