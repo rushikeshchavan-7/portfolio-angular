@@ -1,10 +1,3 @@
-<div class="backdrop" aria-hidden="true">
-  <div class="backdrop-grid"></div>
-  <div class="backdrop-aurora a1"></div>
-  <div class="backdrop-aurora a2"></div>
-  <div class="backdrop-noise"></div>
-</div>
-
 <a class="skip-link" href="#main">Skip to content</a>
 
 <app-navbar (openPalette)="paletteOpen.set(true)" />
@@ -12,8 +5,8 @@
 <main id="main">
   <app-hero />
   <app-capabilities />
-  <app-experience />
   <app-projects (open)="openProject($event)" />
+  <app-experience />
   <app-education />
   <app-certificates />
   <app-contact />

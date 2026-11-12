@@ -2,11 +2,10 @@ import { Component, signal } from '@angular/core';
 import { siteConfig } from '../services/config';
 import { IconComponent, IconName } from '../shared/icon';
 import { RevealDirective } from '../shared/reveal.directive';
-import { SpotlightDirective } from '../shared/spotlight.directive';
 
 @Component({
   selector: 'app-contact',
-  imports: [IconComponent, RevealDirective, SpotlightDirective],
+  imports: [IconComponent, RevealDirective],
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })

@@ -137,8 +137,8 @@ export const siteConfig: SiteConfig = {
   hero: {
     name: 'Rushikesh Chavan',
     firstName: 'Rushikesh',
-    headline: 'AI-first engineer',
-    motto: 'Jack of all trades — mastering them all.',
+    headline: 'Jack of all trades.',
+    motto: 'Mastering them all.',
     rotatingRoles: [
       'LLM-powered products',
       'RAG pipelines',
@@ -149,9 +149,9 @@ export const siteConfig: SiteConfig = {
       'cloud deployments',
     ],
     description:
-      'Software Engineer at CareEdge building enterprise banking platforms for lenders across India, Bhutan and Sri Lanka. I design with AI at the core, and I ship the whole stack around it — models, APIs, interfaces, data and infrastructure — from the first requirement to production.',
+      'I build intelligent products end to end — the models, the APIs, the interfaces and the infrastructure around them.',
     image: '/avatar.webp',
-    statusBadge: 'Software Engineer @ CareEdge',
+    statusBadge: 'Currently at CareEdge',
     location: 'India',
     stats: [
       { value: 2, suffix: '+', label: 'Years shipping to production' },
@@ -375,7 +375,7 @@ export const siteConfig: SiteConfig = {
       company: 'EddyTools Tech. Solution',
       date: 'Jan 2022 — May 2022',
       type: 'work',
-      summary: 'Where the AI-first path started: six computer-vision and AI projects in five months.',
+      summary: 'Where it started: six computer-vision and AI projects in five months.',
       highlights: [
         'Drone surveillance, ArUco marker scanning, drowsiness detection, speed detection, road-sign detection and a smart attendance system.',
       ],

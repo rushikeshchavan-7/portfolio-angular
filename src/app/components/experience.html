@@ -2,7 +2,7 @@
   <div class="container">
     <header class="section-head" reveal>
       <span class="eyebrow">Experience</span>
-      <h2 class="h2">From computer vision<br />to <span class="grad-text">enterprise banking.</span></h2>
+      <h2 class="h2">From computer vision<br /><span class="dim">to enterprise banking.</span></h2>
       <p class="lead">
         Every role added a layer — models, then the web, then the backend systems and production
         ownership that real financial institutions run on.
@@ -19,12 +19,12 @@
         <li class="item" [attr.data-type]="x.type">
           <span class="node" aria-hidden="true"></span>
 
-          <div class="when mono" reveal>
+          <div class="when" reveal>
             <span>{{ x.date }}</span>
             <span class="type">{{ typeLabel[x.type] }}</span>
           </div>
 
-          <article class="card entry" spotlight reveal [revealDelay]="80">
+          <article class="card entry" reveal [revealDelay]="80">
             <header class="entry-head">
               <span class="logo">
                 <img [src]="x.img" [alt]="x.company + ' logo'" loading="lazy" (error)="logoError($event)" />

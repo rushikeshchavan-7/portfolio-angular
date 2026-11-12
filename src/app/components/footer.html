@@ -1,21 +1,17 @@
 <footer class="footer">
-  <div class="container inner">
-    <div class="left">
-      <span class="brand">{{ name }}</span>
-      <span class="faint">AI-first engineer · © {{ year }}</span>
+  <div class="container">
+    <div class="inner">
+      <span class="copy">© {{ year }} {{ name }}</span>
+      <nav class="links" aria-label="Social">
+        @for (l of links; track l.label) {
+          <a
+            [href]="l.url"
+            [attr.target]="l.external ? '_blank' : null"
+            [attr.rel]="l.external ? 'noopener noreferrer' : null"
+          >{{ l.label }}</a>
+        }
+        <button type="button" class="top" (click)="toTop()">Back to top ↑</button>
+      </nav>
     </div>
-    <nav class="links" aria-label="Social">
-      @for (l of links; track l.label) {
-        <a
-          [href]="l.url"
-          [attr.target]="l.external ? '_blank' : null"
-          [attr.rel]="l.external ? 'noopener noreferrer' : null"
-        >{{ l.label }}</a>
-      }
-      <button type="button" class="top" (click)="toTop()" aria-label="Back to top">
-        <app-icon name="arrow-up-right" [size]="15" />
-      </button>
-    </nav>
   </div>
-  <div class="wordmark" aria-hidden="true">{{ name.split(' ')[0] }}</div>
 </footer>

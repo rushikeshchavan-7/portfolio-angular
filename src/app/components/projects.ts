@@ -1,14 +1,12 @@
 import { Component, computed, output, signal } from '@angular/core';
 import { siteConfig, Project, ProjectKind } from '../services/config';
-import { IconComponent } from '../shared/icon';
 import { RevealDirective } from '../shared/reveal.directive';
-import { SpotlightDirective } from '../shared/spotlight.directive';
 
 type Filter = 'all' | ProjectKind;
 
 @Component({
   selector: 'app-projects',
-  imports: [IconComponent, RevealDirective, SpotlightDirective],
+  imports: [RevealDirective],
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
 })

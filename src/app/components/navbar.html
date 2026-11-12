@@ -1,64 +1,49 @@
-<div class="progress" [style.transform]="'scaleX(' + progress() + ')'" aria-hidden="true"></div>
-
-<header class="nav-wrap" [class.scrolled]="scrolled()">
-  <nav class="nav" aria-label="Primary">
+<header class="globalnav" [class.scrolled]="scrolled()" [class.open]="mobileOpen()">
+  <nav class="bar container" aria-label="Primary">
     <a class="brand" href="#about" (click)="go('about', $event)" aria-label="Back to top">
-      <span class="brand-mark">RC</span>
-      <span class="brand-name">{{ name }}</span>
+      {{ name }}
     </a>
 
     <ul class="links">
       @for (s of sections; track s.id) {
         <li>
-          <a [href]="'#' + s.id" [class.active]="active() === s.id" (click)="go(s.id, $event)">
-            {{ s.label }}
-          </a>
+          <a [href]="'#' + s.id" [class.active]="active() === s.id" (click)="go(s.id, $event)">{{ s.label }}</a>
         </li>
       }
     </ul>
 
     <div class="actions">
-      <button type="button" class="kbd-btn" (click)="openPalette.emit()" aria-label="Open command palette">
-        <app-icon name="search" [size]="15" />
-        <span class="kbd-label">Search</span>
-        <kbd>{{ isMac ? '⌘' : 'Ctrl' }} K</kbd>
+      <button type="button" class="icon-btn" (click)="openPalette.emit()" [attr.aria-label]="'Search (' + (isMac ? '⌘' : 'Ctrl') + ' K)'" title="Search  {{ isMac ? '⌘' : 'Ctrl' }} K">
+        <app-icon name="search" [size]="15" [stroke]="1.6" />
       </button>
-
       <button
         type="button"
         class="icon-btn"
         (click)="theme.toggle()"
-        [attr.aria-label]="theme.isDark() ? 'Switch to light theme' : 'Switch to dark theme'"
+        [attr.aria-label]="theme.isDark() ? 'Switch to light appearance' : 'Switch to dark appearance'"
       >
-        <span class="theme-swap" [class.dark]="theme.isDark()">
-          <app-icon name="moon" [size]="17" />
-          <app-icon name="sun" [size]="17" />
-        </span>
+        <app-icon [name]="theme.isDark() ? 'sun' : 'moon'" [size]="15" [stroke]="1.6" />
       </button>
-
       <button
         type="button"
         class="icon-btn menu-btn"
         [attr.aria-expanded]="mobileOpen()"
         aria-controls="mobile-menu"
-        aria-label="Toggle menu"
+        aria-label="Menu"
         (click)="mobileOpen.set(!mobileOpen())"
       >
-        <app-icon [name]="mobileOpen() ? 'close' : 'menu'" [size]="18" />
+        <span class="burger" [class.x]="mobileOpen()"><i></i><i></i></span>
       </button>
     </div>
   </nav>
 
-  <div id="mobile-menu" class="mobile" [class.open]="mobileOpen()">
-    @for (s of sections; track s.id; let i = $index) {
-      <a
-        [href]="'#' + s.id"
-        [class.active]="active() === s.id"
-        [style.transition-delay.ms]="mobileOpen() ? 40 * i : 0"
-        (click)="go(s.id, $event)"
-      >
-        <span class="mono idx">0{{ i + 1 }}</span>{{ s.label }}
-      </a>
-    }
+  <div id="mobile-menu" class="sheet">
+    <div class="container">
+      @for (s of sections; track s.id; let i = $index) {
+        <a [href]="'#' + s.id" [style.transition-delay.ms]="mobileOpen() ? 60 + 30 * i : 0" (click)="go(s.id, $event)">
+          {{ s.label }}
+        </a>
+      }
+    </div>
   </div>
 </header>
