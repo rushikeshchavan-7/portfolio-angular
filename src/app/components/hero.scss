@@ -1,239 +1,196 @@
+:host { display: block; }
+
 .hero {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6rem 1.5rem 4rem;
+  padding-top: clamp(120px, 18vh, 180px);
   overflow: hidden;
 }
 
-.hero-bg {
+/* Very soft spectrum light behind the intro */
+.aura {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.5;
-}
-.orb-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, var(--c1Faint) 0%, transparent 70%);
-  top: -100px;
+  top: -10%;
   left: 50%;
+  width: min(1100px, 140vw);
+  height: 640px;
   transform: translateX(-50%);
-}
-.orb-2 {
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, var(--c2Faint) 0%, transparent 70%);
-  bottom: 10%;
-  right: 10%;
+  background:
+    radial-gradient(closest-side at 30% 45%, rgba(255, 159, 10, 0.16), transparent),
+    radial-gradient(closest-side at 50% 35%, rgba(255, 55, 95, 0.14), transparent),
+    radial-gradient(closest-side at 68% 50%, rgba(191, 90, 242, 0.16), transparent),
+    radial-gradient(closest-side at 82% 40%, rgba(41, 151, 255, 0.14), transparent);
+  filter: blur(40px);
+  opacity: 0.9;
+  pointer-events: none;
+
+  :host-context([data-theme='light']) & { opacity: 0.6; }
 }
 
-.top-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--c1), transparent);
-  opacity: 0.6;
-}
-
-.hero-content {
+.intro {
   position: relative;
-  z-index: 1;
-  text-align: center;
-  max-width: 680px;
-}
-
-.avatar-wrap {
-  margin-bottom: 1rem;
-}
-.avatar {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--border);
-}
-
-.status-badge {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.8rem;
-  color: var(--c3);
-  background: var(--c3Faint);
-  border-radius: 9999px;
-  margin-bottom: 1rem;
+  text-align: center;
 }
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--c3);
+
+.rise {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: rise 1.2s var(--ease) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+/* ── Avatar with the signature ring ── */
+.avatar {
+  position: relative;
+  width: 96px;
+  height: 96px;
+
+  img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--bg);
+    background: var(--bg-elev);
+  }
+}
+
+.avatar-ring,
+.avatar-glow {
+  position: absolute;
+  inset: -3px;
   border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
+  background: var(--spectrum-conic);
+  animation: spin 8s linear infinite;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+.avatar-glow {
+  inset: -6px;
+  filter: blur(14px);
+  opacity: 0.55;
 }
+
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .name {
-  font-size: 60px;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
+  margin-top: 26px;
+  font-size: clamp(19px, 2vw, 21px);
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
-.role {
-  font-size: 1.1rem;
-  color: var(--textTertiary);
-  margin-bottom: 1rem;
+.title {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(48px, 9vw, 112px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
 
-  .c1 { color: var(--c1); }
-  .text-tertiary { color: var(--textTertiary); }
+  .spectrum-text {
+    display: inline-block;
+    padding-bottom: 0.08em; /* keep descenders inside the clip */
+    background-size: 200% 100%;
+    animation: flow 10s ease-in-out infinite alternate;
+  }
 }
 
-.description {
-  font-size: 1rem;
-  color: var(--textSecondary);
-  line-height: 1.6;
-  margin-bottom: 1.75rem;
+@keyframes flow {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
 }
 
-.stats {
+.desc {
+  margin-top: 26px;
+  max-width: 34ch;
+  font-size: clamp(19px, 2.1vw, 24px);
+  line-height: 1.38;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text-muted);
+  text-wrap: balance;
+}
+
+.cta {
+  margin-top: 36px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 1.75rem;
-}
-.stat {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.15rem;
-}
-.stat-value {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-.stat-label {
-  font-size: 0.8rem;
-  color: var(--textTertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 28px;
 }
 
-.buttons {
+.meta {
+  margin-top: 30px;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  font-size: 14px;
+  color: var(--text-muted);
 }
-.btn {
+
+.status {
   display: inline-flex;
   align-items: center;
-  padding: 0.6rem 1.25rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: opacity 0.2s, transform 0.2s;
-}
-.btn:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-.btn-primary {
-  background: var(--btnBg);
-  color: var(--btnText);
-}
-.btn-color {
-  background: transparent;
-  color: var(--btn-color, #666);
-  border: 2px solid var(--btn-color, #666);
+  gap: 8px;
 }
 
-.tech-stack {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
-}
-.tech-tag {
-  padding: 0.35rem 0.65rem;
-  font-size: 0.8rem;
-  color: var(--textTertiary);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 18%, transparent);
 }
 
-.scroll-hint {
-  display: flex;
-  flex-direction: column;
+.social {
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-}
-.scroll-text {
-  font-size: 0.75rem;
-  color: var(--textTertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-}
-.scroll-line {
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(to bottom, var(--border), transparent);
-  border-radius: 2px;
+  gap: 6px;
+  transition: color 0.2s;
+  &:hover { color: var(--text); }
 }
 
-@media (max-width: 768px) {
-  .hero { padding: 40px 20px 40px; }
-  .name { font-size: 40px; letter-spacing: -1.5px; }
-  .avatar { width: 150px; height: 150px; }
-  .role { font-size: 15px; }
-  .description { font-size: 14px; }
-  .stats { gap: 1.5rem; }
-  .orb-1 { width: 400px; height: 400px; top: -200px; }
-  .orb-2 { width: 350px; height: 350px; }
+/* ── Stats: Apple "big numbers" band ── */
+.stats {
+  margin-top: clamp(72px, 10vw, 120px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--border);
+
+  @media (max-width: 760px) { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 480px) {
-  .hero { padding: 32px 16px 32px; }
-  .name { font-size: 32px; letter-spacing: -1px; }
-  .avatar { width: 120px; height: 120px; }
-  .avatar-wrap { margin-bottom: 0.5rem; }
-  .status-badge { padding: 5px 12px; font-size: 0.7rem; }
-  .role { font-size: 13px; }
-  .description { font-size: 13px; line-height: 1.6; }
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    width: 100%;
-    max-width: 280px;
-    margin-left: auto;
-    margin-right: auto;
+
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: clamp(24px, 3vw, 36px);
+  background: var(--bg-elev);
+
+  dd {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
-  .stat-value { font-size: 1.1rem; }
-  .stat-label { font-size: 0.65rem; }
-  .buttons { width: 100%; }
-  .btn { padding: 10px 20px; font-size: 13px; flex: 1; min-width: 0; justify-content: center; text-align: center; }
-  .tech-stack { gap: 6px; }
-  .tech-tag { font-size: 11px; padding: 3px 10px; }
-  .scroll-hint { margin-top: 16px; }
+
+  dt {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--text-muted);
+  }
 }

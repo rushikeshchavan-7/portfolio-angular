@@ -1,25 +1,67 @@
-<section class="experience" id="experience">
-  <div class="experience-inner">
-    <p class="label">Career</p>
-    <h2 class="title">Experience</h2>
+<section class="section" id="experience">
+  <div class="container">
+    <header class="section-head" reveal>
+      <span class="eyebrow">Experience</span>
+      <h2 class="h2">From computer vision<br /><span class="dim">to enterprise banking.</span></h2>
+      <p class="lead">
+        Every role added a layer — models, then the web, then the backend systems and production
+        ownership that real financial institutions run on.
+      </p>
+    </header>
 
-    <div class="cards">
-      @for (exp of experiences; track exp.id) {
-        <article class="card">
-          <img [src]="exp.img" [alt]="exp.company" class="card-logo" />
-          <div class="card-body">
-            <h3 class="card-role">{{ exp.role }}</h3>
-            <p class="card-company">{{ exp.company }}</p>
-            <span class="card-date">{{ exp.date }}</span>
-            <p class="card-desc">{{ exp.desc }}</p>
-            <div class="card-skills">
-              @for (skill of exp.skills; track skill) {
-                <span class="skill-tag">{{ skill }}</span>
+    <div class="timeline" #rail>
+      <div class="rail" aria-hidden="true">
+        <div class="rail-fill" [style.transform]="'scaleY(' + fill() + ')'"></div>
+      </div>
+
+      <ol class="items">
+      @for (x of items; track x.id; let i = $index) {
+        <li class="item" [attr.data-type]="x.type">
+          <span class="node" aria-hidden="true"></span>
+
+          <div class="when" reveal>
+            <span>{{ x.date }}</span>
+            <span class="type">{{ typeLabel[x.type] }}</span>
+          </div>
+
+          <article class="card entry" reveal [revealDelay]="80">
+            <header class="entry-head">
+              <span class="logo">
+                <img [src]="x.img" [alt]="x.company + ' logo'" loading="lazy" (error)="logoError($event)" />
+              </span>
+              <div>
+                <h3 class="role">{{ x.role }}</h3>
+                <p class="company">{{ x.company }}</p>
+              </div>
+            </header>
+
+            <p class="summary">{{ x.summary }}</p>
+
+            @if (x.highlights.length) {
+              <ul class="highlights">
+                @for (h of x.highlights; track h) {
+                  <li>{{ h }}</li>
+                }
+              </ul>
+            }
+
+            @if (x.awards?.length) {
+              <div class="awards">
+                @for (a of x.awards; track a) {
+                  <span class="award"><app-icon name="award" [size]="14" /> {{ a }}</span>
+                }
+              </div>
+            }
+
+            <div class="tags">
+              @for (s of x.skills; track s) {
+                <span class="chip">{{ s }}</span>
               }
             </div>
-          </div>
-        </article>
+          </article>
+        </li>
       }
+      </ol>
     </div>
   </div>
 </section>

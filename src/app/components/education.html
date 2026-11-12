@@ -1,20 +1,26 @@
-<section id="education" class="education">
-  <div class="education-inner">
-    <span class="section-label">Background</span>
-    <h2 class="section-title">Education</h2>
+<section class="section" id="education">
+  <div class="container">
+    <header class="section-head" reveal>
+      <span class="eyebrow">Education</span>
+      <h2 class="h2">Computer science,<br /><span class="dim">AI and machine learning.</span></h2>
+      <p class="lead">B.E. in Computer Science (AI & ML) with Honours in Blockchain Technology.</p>
+    </header>
 
-    <div class="cards">
-      <article *ngFor="let edu of education" class="card">
-        <div class="logo-wrap">
-          <img [src]="edu.img" [alt]="edu.school" class="logo" />
-        </div>
-        <div class="card-content">
-          <h3 class="school">{{ edu.school }}</h3>
-          <p class="degree">{{ edu.degree }}</p>
-          <span class="grade">{{ edu.grade }}</span>
-          <span class="date-badge">{{ edu.date }}</span>
-        </div>
-      </article>
+    <div class="grid">
+      @for (e of items; track e.id; let i = $index) {
+        <article class="card edu" [class.primary]="i < 2" reveal [revealDelay]="i * 70">
+          <div class="top">
+            <span class="logo"><img [src]="e.img" [alt]="" loading="lazy" (error)="logoError($event)" /></span>
+            <span class="date">{{ e.date }}</span>
+          </div>
+          <h3 class="degree">{{ e.degree }}</h3>
+          <p class="school">{{ e.school }}</p>
+          <div class="bottom">
+            <span class="grade">{{ e.grade }}</span>
+            <span class="note">{{ e.desc }}</span>
+          </div>
+        </article>
+      }
     </div>
   </div>
 </section>

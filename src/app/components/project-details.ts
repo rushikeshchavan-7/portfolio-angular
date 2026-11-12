@@ -1,27 +1,29 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, OnDestroy, input, output, viewChild } from '@angular/core';
 import { Project } from '../services/config';
+import { IconComponent } from '../shared/icon';
 
 @Component({
   selector: 'app-project-details',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [IconComponent],
   templateUrl: './project-details.html',
   styleUrl: './project-details.scss',
+  host: { '(document:keydown.escape)': 'closed.emit()' },
 })
-export class ProjectDetailsComponent {
-  @Input() project: Project | null = null;
-  @Output() closeModal = new EventEmitter<void>();
+export class ProjectDetailsComponent implements AfterViewInit, OnDestroy {
+  readonly project = input.required<Project>();
+  readonly closed = output<void>();
 
-  onOverlayClick(): void {
-    this.closeModal.emit();
+  private closeBtn = viewChild<ElementRef<HTMLButtonElement>>('closeBtn');
+  private previousFocus: HTMLElement | null = null;
+
+  ngAfterViewInit(): void {
+    this.previousFocus = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = 'hidden';
+    this.closeBtn()?.nativeElement.focus();
   }
 
-  onCardClick(event: Event): void {
-    event.stopPropagation();
-  }
-
-  close(): void {
-    this.closeModal.emit();
+  ngOnDestroy(): void {
+    document.body.style.overflow = '';
+    this.previousFocus?.focus?.();
   }
 }

@@ -1,15 +1,128 @@
-<section id="projects" class="projects">
-  <div class="projects-inner">
-    <span class="section-label">Portfolio</span>
-    <h2 class="section-title">Projects</h2>
-    <p class="section-subtitle">Things I've built</p>
+<section class="section" id="projects">
+  <div class="container">
+    <header class="section-head" reveal>
+      <span class="eyebrow">Work</span>
+      <h2 class="h2">Products with<br />intelligence built in.</h2>
+    </header>
+
+    @if (featured; as f) {
+      <article class="card featured" reveal>
+        <div class="f-copy">
+          <p class="new">New</p>
+          <h3 class="f-title">{{ f.title }}</h3>
+          <p class="f-tagline">{{ f.tagline }}.</p>
+          <div class="f-links">
+            @if (f.webapp) {
+              <a class="btn btn-primary btn-sm" [href]="f.webapp" target="_blank" rel="noopener noreferrer">Try it</a>
+            }
+            <button type="button" class="more-link" (click)="open.emit(f)">Learn more</button>
+            @if (f.github) {
+              <a class="more-link" [href]="f.github" target="_blank" rel="noopener noreferrer">Source</a>
+            }
+          </div>
+        </div>
+
+        @if (f.media?.video; as v) {
+          <div class="shot">
+            <div class="shot-glow" aria-hidden="true"></div>
+            <div class="frame">
+              <div class="frame-bar" aria-hidden="true">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="url">credisense-rushi.vercel.app</span>
+              </div>
+              <video
+                #tour
+                class="tour"
+                [poster]="v.poster"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Screen recording: a walkthrough of CrediSense, from the credit pipeline to a cited AI answer"
+              >
+                @if (v.webm) { <source [src]="v.webm" type="video/webm" /> }
+                <source [src]="v.mp4" type="video/mp4" />
+              </video>
+              <button type="button" class="play" (click)="togglePlay()" [attr.aria-label]="playing() ? 'Pause walkthrough' : 'Play walkthrough'">
+                @if (playing()) {
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                } @else {
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+                }
+              </button>
+            </div>
+          </div>
+        }
+
+        @if (f.media?.gallery?.length) {
+          <div class="gallery">
+            <div class="gallery-head">
+              <h4 class="gallery-title">Take a closer look.</h4>
+              <div class="gallery-nav">
+                <button type="button" (click)="scrollGallery(-1)" aria-label="Previous screenshot">‹</button>
+                <button type="button" (click)="scrollGallery(1)" aria-label="Next screenshot">›</button>
+              </div>
+            </div>
+            <ul class="rail" #rail (scroll)="onRailScroll()">
+              @for (g of f.media!.gallery; track g.src; let gi = $index) {
+                <li class="slide">
+                  <a class="slide-img" [href]="g.src" target="_blank" rel="noopener" [attr.aria-label]="'Open full screenshot: ' + g.title">
+                    <img [src]="g.src" [alt]="'CrediSense — ' + g.title" loading="lazy" width="1600" height="1000" />
+                  </a>
+                  <p class="slide-cap"><strong>{{ g.title }}.</strong> {{ g.caption }}</p>
+                </li>
+              }
+            </ul>
+            <div class="dots-row" aria-hidden="true">
+              @for (g of f.media!.gallery; track g.src; let gi = $index) {
+                <span [class.on]="gi === slide()"></span>
+              }
+            </div>
+            <p class="note">Screens from the running app. Borrowers and figures are the app’s fictional sample data.</p>
+          </div>
+        }
+
+        <ul class="f-facts">
+          @for (h of f.highlights.slice(0, 3); track h) {
+            <li>{{ h }}</li>
+          }
+        </ul>
+      </article>
+    }
+
+    <div class="toolbar" reveal>
+      <h3 class="more-title">More work</h3>
+      <div class="filters" role="tablist" aria-label="Filter projects">
+        @for (fl of filters; track fl.key) {
+          <button
+            type="button"
+            role="tab"
+            class="filter"
+            [class.active]="filter() === fl.key"
+            [attr.aria-selected]="filter() === fl.key"
+            (click)="filter.set(fl.key)"
+          >{{ fl.label }}</button>
+        }
+      </div>
+    </div>
 
     <div class="grid">
-      <app-project-card
-        *ngFor="let project of projects"
-        [project]="project"
-        (cardClick)="onCardClick(project)"
-      />
+      @for (p of list(); track p.id; let i = $index) {
+        <article class="card proj" reveal [revealDelay]="(i % 2) * 90">
+          <button type="button" class="proj-hit" (click)="open.emit(p)" [attr.aria-label]="'Learn more about ' + p.title"></button>
+          <div class="proj-body">
+            <p class="proj-date">{{ p.date }}</p>
+            <h4 class="proj-title">{{ p.title }}</h4>
+            <p class="proj-tagline">{{ p.tagline }}.</p>
+            <span class="more-link">Learn more</span>
+          </div>
+          <div class="thumb">
+            <img [src]="p.image" [alt]="" loading="lazy" (error)="imgError($event)" />
+          </div>
+        </article>
+      } @empty {
+        <p class="empty">Nothing here yet.</p>
+      }
     </div>
   </div>
 </section>

@@ -1,0 +1,96 @@
+:host { display: block; }
+
+.dim { color: var(--text-faint); }
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 20px;
+
+  @media (max-width: 1000px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 640px) { grid-template-columns: 1fr; gap: 14px; }
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(28px, 3.4vw, 44px);
+  overflow: hidden;
+
+  &[data-size='xl'] { grid-column: span 6; }
+  &[data-size='md'] { grid-column: span 3; }
+  &[data-size='sm'] { grid-column: span 2; }
+
+  @media (max-width: 1000px) {
+    &[data-size='xl'] { grid-column: span 2; }
+    &[data-size='md'], &[data-size='sm'] { grid-column: span 1; }
+  }
+  @media (max-width: 640px) {
+    &[data-size='xl'], &[data-size='md'], &[data-size='sm'] { grid-column: auto; }
+  }
+}
+
+.tile-icon {
+  color: var(--text);
+  margin-bottom: 22px;
+
+  &.spectrum {
+    /* signature: the icon itself carries the spectrum */
+    color: #bf5af2;
+    filter: drop-shadow(0 0 18px rgba(191, 90, 242, 0.45));
+    :host-context([data-theme='light']) & { color: #8944ab; }
+  }
+}
+
+.tile-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.4vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+
+  [data-size='xl'] & { font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.045em; }
+}
+
+.tile-summary {
+  margin-top: 12px;
+  font-size: 17px;
+  line-height: 1.47;
+  color: var(--text-muted);
+
+  [data-size='xl'] & { font-size: clamp(19px, 1.8vw, 21px); max-width: 46ch; line-height: 1.42; }
+}
+
+.examples {
+  list-style: none;
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+
+  @media (max-width: 760px) { grid-template-columns: 1fr; }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px;
+    border-radius: var(--radius);
+    background: var(--bg);
+    :host-context([data-theme='light']) & { background: #ffffff; }
+  }
+
+  .ex-title { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+  .ex-detail { font-size: 15px; line-height: 1.45; color: var(--text-muted); }
+  .ex-proj { margin-top: auto; padding-top: 10px; font-size: 13px; font-weight: 600; color: var(--text-faint); }
+}
+
+.stack {
+  margin-top: auto;
+  padding-top: 28px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-faint);
+
+  span:not(.sep) { color: var(--text-muted); }
+}

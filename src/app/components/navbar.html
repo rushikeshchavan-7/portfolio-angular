@@ -1,56 +1,49 @@
-<nav class="navbar" [class.scrolled]="scrollY() > 20">
-  <div class="nav-inner">
-    <a class="logo" href="#" (click)="scrollTo('about'); $event.preventDefault()">
-      <span class="logo-text">{{ heroName }}</span>
-      <span class="logo-dot"></span>
+<header class="globalnav" [class.scrolled]="scrolled()" [class.open]="mobileOpen()">
+  <nav class="bar container" aria-label="Primary">
+    <a class="brand" href="#about" (click)="go('about', $event)" aria-label="Back to top">
+      {{ name }}
     </a>
 
-    <ul class="nav-links desktop">
-      @for (s of navSections; track s.id) {
+    <ul class="links">
+      @for (s of sections; track s.id) {
         <li>
-          <a (click)="scrollTo(s.id); $event.preventDefault()" href="#">{{ s.label }}</a>
+          <a [href]="'#' + s.id" [class.active]="active() === s.id" (click)="go(s.id, $event)">{{ s.label }}</a>
         </li>
       }
     </ul>
 
-    <div class="nav-actions">
-      <button
-        class="theme-btn"
-        type="button"
-        (click)="toggleTheme()"
-        [attr.aria-label]="themeService.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
-      >
-        @if (themeService.isDark()) {
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"/>
-            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-          </svg>
-        } @else {
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        }
+    <div class="actions">
+      <button type="button" class="icon-btn" (click)="openPalette.emit()" [attr.aria-label]="'Search (' + (isMac ? '⌘' : 'Ctrl') + ' K)'" title="Search  {{ isMac ? '⌘' : 'Ctrl' }} K">
+        <app-icon name="search" [size]="15" [stroke]="1.6" />
       </button>
-
       <button
-        class="hamburger"
         type="button"
-        aria-label="Toggle menu"
-        [class.open]="mobileOpen()"
-        (click)="toggleMobile()"
+        class="icon-btn"
+        (click)="theme.toggle()"
+        [attr.aria-label]="theme.isDark() ? 'Switch to light appearance' : 'Switch to dark appearance'"
       >
-        <span></span><span></span><span></span>
+        <app-icon [name]="theme.isDark() ? 'sun' : 'moon'" [size]="15" [stroke]="1.6" />
+      </button>
+      <button
+        type="button"
+        class="icon-btn menu-btn"
+        [attr.aria-expanded]="mobileOpen()"
+        aria-controls="mobile-menu"
+        aria-label="Menu"
+        (click)="mobileOpen.set(!mobileOpen())"
+      >
+        <span class="burger" [class.x]="mobileOpen()"><i></i><i></i></span>
       </button>
     </div>
-  </div>
+  </nav>
 
-  <div class="mobile-menu" [class.open]="mobileOpen()">
-    <ul class="nav-links mobile">
-      @for (s of navSections; track s.id) {
-        <li>
-          <a (click)="scrollTo(s.id); $event.preventDefault()" href="#">{{ s.label }}</a>
-        </li>
+  <div id="mobile-menu" class="sheet">
+    <div class="container">
+      @for (s of sections; track s.id; let i = $index) {
+        <a [href]="'#' + s.id" [style.transition-delay.ms]="mobileOpen() ? 60 + 30 * i : 0" (click)="go(s.id, $event)">
+          {{ s.label }}
+        </a>
       }
-    </ul>
+    </div>
   </div>
-</nav>
+</header>

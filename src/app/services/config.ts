@@ -1,14 +1,15 @@
 export interface HeroButton {
   label: string;
   url: string;
-  type: 'primary' | 'color';
-  color?: string;
+  kind: 'primary' | 'ghost';
+  icon?: 'resume' | 'github' | 'linkedin';
 }
 
 export interface Stat {
-  value: string;
+  value: number;
+  suffix?: string;
+  decimals?: number;
   label: string;
-  color: 'c1' | 'c2' | 'c3';
 }
 
 export interface Skill {
@@ -16,8 +17,17 @@ export interface Skill {
   image: string;
 }
 
-export interface SkillGroup {
+/** A capability domain — one tile of the "jack of all trades" bento. */
+export interface Capability {
+  id: string;
   title: string;
+  kicker: string;
+  summary: string;
+  icon: 'brain' | 'server' | 'layout' | 'chart' | 'cloud' | 'compass';
+  accent: string;
+  size: 'xl' | 'md' | 'sm';
+  examples?: { title: string; detail: string; project: string }[];
+  shippedIn: string[];
   skills: Skill[];
 }
 
@@ -27,7 +37,10 @@ export interface Experience {
   role: string;
   company: string;
   date: string;
-  desc: string;
+  type: 'work' | 'research' | 'leadership';
+  summary: string;
+  highlights: string[];
+  awards?: string[];
   skills: string[];
 }
 
@@ -48,18 +61,35 @@ export interface ProjectMember {
   github: string;
 }
 
+export type ProjectKind = 'ai' | 'fullstack' | 'tools';
+
+export interface ProjectShot {
+  src: string;
+  title: string;
+  caption: string;
+}
+
+export interface ProjectMedia {
+  video?: { mp4: string; webm?: string; poster: string };
+  gallery: ProjectShot[];
+}
+
 export interface Project {
   id: number;
   title: string;
+  tagline: string;
   date: string;
   description: string;
+  highlights: string[];
   image: string;
   tags: string[];
-  category: string;
+  kinds: ProjectKind[];
+  featured?: boolean;
   github: string;
   webapp: string;
   researchPaper?: string;
   member?: ProjectMember[];
+  media?: ProjectMedia;
 }
 
 export interface Certificate {
@@ -72,179 +102,231 @@ export interface Certificate {
   skills: string[];
 }
 
-export interface FooterLink {
+export interface SocialLink {
   label: string;
   url: string;
   external: boolean;
 }
 
 export interface SiteConfig {
-  sections: {
-    hero: boolean;
-    skills: boolean;
-    experience: boolean;
-    projects: boolean;
-    education: boolean;
-    certificates: boolean;
-    contact: boolean;
-  };
   settings: {
     defaultTheme: 'dark' | 'light';
-    showGridOverlay: boolean;
-    showSideElements: boolean;
   };
   hero: {
     name: string;
-    tagline: string;
-    roles: string;
+    firstName: string;
+    headline: string;
+    motto: string;
+    rotatingRoles: string[];
     description: string;
-    image: string | null;
+    image: string;
     statusBadge: string;
+    location: string;
     stats: Stat[];
     buttons: HeroButton[];
-    techStack: string[];
   };
+  marquee: string[];
   contact: {
     email: string;
     phone: string;
     subtitle: string;
   };
-  footer: {
-    name: string;
-    links: FooterLink[];
-  };
-  skills: SkillGroup[];
+  socials: SocialLink[];
+  capabilities: Capability[];
   experiences: Experience[];
   education: Education[];
   certificates: Certificate[];
   projects: Project[];
 }
 
-export const siteConfig: SiteConfig = {
-  sections: {
-    hero: true,
-    skills: true,
-    experience: true,
-    projects: true,
-    education: true,
-    certificates: true,
-    contact: true,
-  },
+const icon = (path: string) => `https://raw.githubusercontent.com/devicons/devicon/master/icons/${path}`;
 
+export const siteConfig: SiteConfig = {
   settings: {
-    defaultTheme: 'light',
-    showGridOverlay: true,
-    showSideElements: true,
+    defaultTheme: 'dark',
   },
 
   hero: {
     name: 'Rushikesh Chavan',
-    tagline: 'Software Engineer',
-    roles: '.NET Core · Angular · Python · AI/ML',
+    firstName: 'Rushikesh',
+    headline: 'Jack of all trades.',
+    motto: 'Mastering them all.',
+    rotatingRoles: [
+      'LLM-powered products',
+      'RAG pipelines',
+      'AI agents',
+      '.NET Core backends',
+      'Angular & React frontends',
+      'data & ETL pipelines',
+      'cloud deployments',
+    ],
     description:
-      'Software Engineer at CareEdge with ~2 years of professional experience (including a full-time onsite internship) building enterprise-grade banking and financial applications using .NET Core, Angular, Python, and FastAPI for clients across India, Bhutan, and Sri Lanka. B.E. in Computer Science (AI & ML) with Honours in Blockchain Technology. Passionate about building intelligent applications with LangChain, RAG, and LLMs.',
-    image: null,
-    statusBadge: 'Software Engineer at CareEdge',
+      'I build intelligent products end to end — the models, the APIs, the interfaces and the infrastructure around them.',
+    image: '/avatar.webp',
+    statusBadge: 'Currently at CareEdge',
+    location: 'India',
     stats: [
-      { value: '8.29', label: 'CGPA', color: 'c1' },
-      { value: '20+', label: 'Months at CareEdge', color: 'c2' },
-      { value: '10+', label: 'Projects', color: 'c1' },
-      { value: '1', label: 'Research Paper', color: 'c3' },
+      { value: 2, suffix: '+', label: 'Years shipping to production' },
+      { value: 3, label: 'Enterprise banking products owned' },
+      { value: 10, suffix: '+', label: 'Projects built end-to-end' },
+      { value: 95, suffix: '%', label: 'Fewer ad-hoc report requests' },
     ],
     buttons: [
       {
-        label: 'View Resume',
+        label: 'View résumé',
         url: 'https://drive.google.com/file/d/12-VrBblQ0HpDmFgEyYUg999Mc14tPlSu/view?usp=sharing',
-        type: 'primary',
+        kind: 'primary',
+        icon: 'resume',
       },
-      {
-        label: 'GitHub',
-        url: 'https://github.com/rushikeshchavan-7',
-        type: 'color',
-        color: '#22c55e',
-      },
+      { label: 'GitHub', url: 'https://github.com/rushikeshchavan-7', kind: 'ghost', icon: 'github' },
       {
         label: 'LinkedIn',
         url: 'https://www.linkedin.com/in/rushikesh-chavan-275282211/',
-        type: 'color',
-        color: '#0a66c2',
+        kind: 'ghost',
+        icon: 'linkedin',
       },
     ],
-    techStack: ['.NET Core', 'Angular', 'TypeScript', 'Python', 'C#', 'FastAPI', 'PostgreSQL', 'MongoDB', 'LangChain', 'RAG', 'Docker', 'AWS'],
   },
+
+  marquee: [
+    'LangChain', 'LangGraph', 'RAG', 'Groq', 'Gemini', 'Ollama', 'PyTorch', 'XGBoost',
+    '.NET Core', 'C#', 'FastAPI', 'Python', 'Angular', 'React', 'Next.js', 'TypeScript',
+    'PostgreSQL', 'Oracle SQL', 'MongoDB', 'ChromaDB', 'Docker', 'AWS', 'Azure DevOps', 'GitHub Actions',
+  ],
 
   contact: {
     email: 'rushikeshchavan2002@gmail.com',
     phone: '+91 9112678002',
-    subtitle: 'Have a question or want to work together? Reach out directly.',
+    subtitle:
+      'Have an AI product to ship, a platform to scale, or a hard problem across the stack? I would love to hear about it.',
   },
 
-  footer: {
-    name: 'Rushikesh Chavan',
-    links: [
-      { label: 'GitHub', url: 'https://github.com/rushikeshchavan-7', external: true },
-      { label: 'LinkedIn', url: 'https://www.linkedin.com/in/rushikesh-chavan-275282211/', external: true },
-      { label: 'Instagram', url: 'https://www.instagram.com/rushi.chavan__?igsh=bmJyejV3cWlvZnN2', external: true },
-      { label: 'Email', url: 'mailto:rushikeshchavan2002@gmail.com', external: false },
-    ],
-  },
+  socials: [
+    { label: 'GitHub', url: 'https://github.com/rushikeshchavan-7', external: true },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/rushikesh-chavan-275282211/', external: true },
+    { label: 'Instagram', url: 'https://www.instagram.com/rushi.chavan__?igsh=bmJyejV3cWlvZnN2', external: true },
+    { label: 'Email', url: 'mailto:rushikeshchavan2002@gmail.com', external: false },
+  ],
 
-  skills: [
+  capabilities: [
     {
-      title: 'Backend',
-      skills: [
-        { name: 'C#', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg' },
-        { name: '.NET Core', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg' },
-        { name: 'Python', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg' },
-        { name: 'FastAPI', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg' },
-        { name: 'Oracle SQL', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/oracle/oracle-original.svg' },
-        { name: 'PostgreSQL', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg' },
-        { name: 'MongoDB', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg' },
-        { name: 'REST APIs', image: 'https://img.icons8.com/nolan/512/api-settings.png' },
+      id: 'ai',
+      title: 'AI & LLM Engineering',
+      kicker: 'The core',
+      summary:
+        'Retrieval-augmented generation, agentic workflows with LangGraph, grounded answers with citations, model fallbacks and guard-rails. AI is the starting point of the design, not a feature bolted on at the end.',
+      icon: 'brain',
+      accent: '#a78bfa',
+      size: 'xl',
+      examples: [
+        { title: 'Agentic analysis', detail: 'AI credit memo and an analyst that answers with cited sources', project: 'CrediSense' },
+        { title: 'Grounded RAG', detail: 'Answers strictly from uploaded documents, never general knowledge', project: 'DocuMind' },
+        { title: 'Applied ML', detail: 'XGBoost at 98.6% accuracy and ResNet9 leaf-disease vision', project: 'Cultivate 365' },
       ],
-    },
-    {
-      title: 'Frontend',
+      shippedIn: ['CrediSense', 'DocuMind', 'Cultivate 365'],
       skills: [
-        { name: 'Angular', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/angularjs/angularjs-original.svg' },
-        { name: 'TypeScript', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/512px-Typescript_logo_2020.svg.png' },
-        { name: 'JavaScript', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/800px-JavaScript-logo.png' },
-        { name: 'HTML', image: 'https://www.w3.org/html/logo/badge/html5-badge-h-solo.png' },
-        { name: 'CSS / SCSS', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1452px-CSS3_logo_and_wordmark.svg.png' },
-        { name: 'Tailwind CSS', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg' },
-        { name: 'Bootstrap', image: 'https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png' },
-      ],
-    },
-    {
-      title: 'Cloud & DevOps',
-      skills: [
-        { name: 'AWS', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg' },
-        { name: 'Docker', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg' },
-        { name: 'Azure DevOps', image: 'https://imgs.search.brave.com/SOtQTzKMkgcb6hGTUqEmh4yfoG-943oS0E6liRb7CBo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMTUvQXp1/cmUtTG9nby1QTkct/RmlsZS5wbmc' },
-        { name: 'Git', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg' },
-        { name: 'GitHub Actions', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/githubactions/githubactions-original.svg' },
-        { name: 'GitLab', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/gitlab/gitlab-original.svg' },
-        { name: 'Jira', image: 'https://cdn.worldvectorlogo.com/logos/jira-1.svg' },
-        { name: 'Postman', image: 'https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg' },
-        { name: 'Swagger', image: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Swagger-logo.png' },
-        { name: 'VS Code', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/512px-Visual_Studio_Code_1.35_icon.svg.png' },
-        { name: 'Visual Studio', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Visual_Studio_Icon_2022.svg/512px-Visual_Studio_Icon_2022.svg.png' },
-      ],
-    },
-    {
-      title: 'AI & ML',
-      skills: [
-        { name: 'LangChain', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg' },
-        { name: 'LangGraph', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg' },
-        { name: 'RAG', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg' },
-        { name: 'PyTorch', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg' },
-        { name: 'TensorFlow', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/tensorflow/tensorflow-original.svg' },
-        { name: 'Scikit-Learn', image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg' },
+        { name: 'LangChain', image: 'https://cdn.simpleicons.org/langchain/1C3C3C' },
+        { name: 'LangGraph', image: 'https://cdn.simpleicons.org/langgraph/1C3C3C' },
+        { name: 'RAG', image: icon('python/python-original.svg') },
+        { name: 'Groq', image: 'https://cdn.simpleicons.org/groq/F55036' },
+        { name: 'Gemini', image: 'https://cdn.simpleicons.org/googlegemini/8E75B2' },
         { name: 'Ollama', image: 'https://ollama.com/public/ollama.png' },
-        { name: 'OpenCV', image: 'https://upload.wikimedia.org/wikipedia/commons/3/32/OpenCV_Logo_with_text_svg_version.svg' },
-        { name: 'NumPy', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg' },
-        { name: 'Pandas', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg' },
-        { name: 'Flask', image: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/flask/flask-original.svg' },
+        { name: 'ChromaDB', image: icon('python/python-original.svg') },
+        { name: 'Prompt Eng.', image: 'https://cdn.simpleicons.org/openai/412991' },
+      ],
+    },
+    {
+      id: 'backend',
+      title: 'Backend & APIs',
+      kicker: 'Systems',
+      summary:
+        'Clean-architecture services in .NET Core and FastAPI: N-level authorization engines, runtime SQL generation, microservices and well-tested REST APIs.',
+      icon: 'server',
+      accent: '#22d3ee',
+      size: 'md',
+      shippedIn: ['CareEdge', 'DocuMind'],
+      skills: [
+        { name: 'C#', image: icon('csharp/csharp-original.svg') },
+        { name: '.NET Core', image: icon('dotnetcore/dotnetcore-original.svg') },
+        { name: 'Python', image: icon('python/python-original.svg') },
+        { name: 'FastAPI', image: icon('fastapi/fastapi-original.svg') },
+        { name: 'PostgreSQL', image: icon('postgresql/postgresql-original.svg') },
+        { name: 'Oracle SQL', image: icon('oracle/oracle-original.svg') },
+        { name: 'MongoDB', image: icon('mongodb/mongodb-original.svg') },
+      ],
+    },
+    {
+      id: 'frontend',
+      title: 'Frontend & UX',
+      kicker: 'Interfaces',
+      summary:
+        'Fast, accessible interfaces in Angular, React and Next.js — SSR, lazy loading and shared component libraries. 50% faster Angular apps in production.',
+      icon: 'layout',
+      accent: '#f472b6',
+      size: 'md',
+      shippedIn: ['CareEdge', 'KarmaKendra', 'This site'],
+      skills: [
+        { name: 'Angular', image: icon('angular/angular-original.svg') },
+        { name: 'React', image: icon('react/react-original.svg') },
+        { name: 'Next.js', image: icon('nextjs/nextjs-original.svg') },
+        { name: 'TypeScript', image: icon('typescript/typescript-original.svg') },
+        { name: 'Tailwind', image: icon('tailwindcss/tailwindcss-original.svg') },
+        { name: 'SCSS', image: icon('sass/sass-original.svg') },
+      ],
+    },
+    {
+      id: 'data',
+      title: 'Data & Machine Learning',
+      kicker: 'Models',
+      summary:
+        'Classical ML through deep learning: XGBoost at 98.6% accuracy, ResNet-based vision, and Python ETL pipelines automating regulatory reporting.',
+      icon: 'chart',
+      accent: '#34d399',
+      size: 'sm',
+      shippedIn: ['Cultivate 365', 'CareEdge ETL'],
+      skills: [
+        { name: 'PyTorch', image: icon('pytorch/pytorch-original.svg') },
+        { name: 'TensorFlow', image: icon('tensorflow/tensorflow-original.svg') },
+        { name: 'scikit-learn', image: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg' },
+        { name: 'Pandas', image: icon('pandas/pandas-original.svg') },
+        { name: 'NumPy', image: icon('numpy/numpy-original.svg') },
+        { name: 'OpenCV', image: icon('opencv/opencv-original.svg') },
+      ],
+    },
+    {
+      id: 'cloud',
+      title: 'Cloud & DevOps',
+      kicker: 'Delivery',
+      summary:
+        'Containerised, CI-gated delivery on AWS, Vercel, Netlify and Azure DevOps — with unit and end-to-end suites guarding every merge.',
+      icon: 'cloud',
+      accent: '#fbbf24',
+      size: 'sm',
+      shippedIn: ['CrediSense', 'CareEdge'],
+      skills: [
+        { name: 'AWS', image: icon('amazonwebservices/amazonwebservices-original-wordmark.svg') },
+        { name: 'Docker', image: icon('docker/docker-original.svg') },
+        { name: 'Azure DevOps', image: icon('azuredevops/azuredevops-original.svg') },
+        { name: 'GitHub Actions', image: icon('githubactions/githubactions-original.svg') },
+        { name: 'Playwright', image: icon('playwright/playwright-original.svg') },
+        { name: 'Git', image: icon('git/git-original.svg') },
+      ],
+    },
+    {
+      id: 'product',
+      title: 'Product & Leadership',
+      kicker: 'Ownership',
+      summary:
+        'From requirements gathering with bank stakeholders to production sign-off. Led the college Rotaract board as Vice President.',
+      icon: 'compass',
+      accent: '#60a5fa',
+      size: 'sm',
+      shippedIn: ['CareEdge', 'Rotaract'],
+      skills: [
+        { name: 'Agile / Scrum', image: icon('jira/jira-original.svg') },
+        { name: 'System Design', image: icon('azuresqldatabase/azuresqldatabase-original.svg') },
+        { name: 'Postman', image: icon('postman/postman-original.svg') },
+        { name: 'Swagger', image: icon('swagger/swagger-original.svg') },
       ],
     },
   ],
@@ -252,57 +334,198 @@ export const siteConfig: SiteConfig = {
   experiences: [
     {
       id: 0,
-      img: 'https://imgs.search.brave.com/QGBHWgSumlnIAKcKCPz2qVg1bAX_6fcT5Gxdc42ZUXM/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzMyYjIzZTJl/ZjlkYTM3MmFlMzc4/ZmIzODlkNzQxNTU5/YTMyM2QwOGIyMmI4/NjdkNzA0ODlmZjE4/ZDU5OGRiOS93d3cu/Y2FyZWVkZ2UuaW4v',
+      img: 'https://www.google.com/s2/favicons?domain=careedge.in&sz=128',
       role: 'Software Engineer',
       company: 'CareEdge',
-      date: 'May 2025 - Present',
-      desc: 'Promoted from Junior Software Developer to Software Engineer (April 2026). Owned and delivered three enterprise banking products — Stress Testing, Operational Risk, and Loan Origination — for financial institutions across India, Bhutan, and Sri Lanka, from requirements gathering to production deployment. Built a no-code Report & Dashboard Builder with a visual query designer generating parameterized SQL at runtime, reducing ad-hoc reporting change requests by 95%. Designed a configurable N-level authorization policy engine with screen-level access control using SOLID principles, and Python ETL pipelines (APScheduler + Pandas) automating regulatory reporting for two banks. Improved Angular performance by 50% via lazy loading, SSR, and API optimization. Awards: Emerging Engineer of the Year FY26 · Rookie of the Year FY26 · Hats Off FY25 Q4.',
-      skills: ['.NET Core', 'C#', 'Angular', 'TypeScript', 'Python', 'FastAPI', 'Microservices', 'SOLID', 'Clean Architecture', 'Oracle SQL', 'PostgreSQL', 'REST APIs', 'Git', 'Jira'],
+      date: 'May 2025 — Present',
+      type: 'work',
+      summary:
+        'Promoted from Junior Software Developer to Software Engineer (April 2026). Own three enterprise banking products — Stress Testing, Operational Risk and Loan Origination — for financial institutions across India, Bhutan and Sri Lanka, from requirements to production.',
+      highlights: [
+        'Built a no-code Report & Dashboard Builder with a visual query designer that generates parameterised SQL at runtime — cut ad-hoc reporting change requests by 95%.',
+        'Designed a configurable N-level authorization policy engine with screen-level access control, following SOLID principles.',
+        'Automated regulatory reporting for two banks with Python ETL pipelines (APScheduler + Pandas).',
+        'Made the Angular apps 50% faster with lazy loading, SSR and API optimisation.',
+      ],
+      awards: ['Emerging Engineer of the Year FY26', 'Rookie of the Year FY26', 'Hats Off FY25 Q4'],
+      skills: ['.NET Core', 'C#', 'Angular', 'TypeScript', 'Python', 'FastAPI', 'Microservices', 'Clean Architecture', 'Oracle SQL', 'PostgreSQL'],
     },
     {
       id: 1,
-      img: 'https://imgs.search.brave.com/QGBHWgSumlnIAKcKCPz2qVg1bAX_6fcT5Gxdc42ZUXM/rs:fit:32:32:1:0/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvMzMyYjIzZTJl/ZjlkYTM3MmFlMzc4/ZmIzODlkNzQxNTU5/YTMyM2QwOGIyMmI4/NjdkNzA0ODlmZjE4/ZDU5OGRiOS93d3cu/Y2FyZWVkZ2UuaW4v',
-      role: 'Software Development Intern (Full-Time Onsite)',
+      img: 'https://www.google.com/s2/favicons?domain=careedge.in&sz=128',
+      role: 'Software Development Intern (full-time, onsite)',
       company: 'CareEdge',
-      date: 'Nov 2024 - Apr 2025',
-      desc: 'Full-time onsite internship building production features for enterprise banking applications using .NET Core, Angular, Oracle SQL, and PostgreSQL, following Test-Driven Development (TDD) with xUnit. Refactored a shared Angular component library, reducing repetitive code by 30% across multiple modules. Participated in code reviews and sprint planning alongside senior developers in a professional Agile environment.',
-      skills: ['.NET Core', 'C#', 'Angular', 'TypeScript', 'Python', 'xUnit', 'TDD', 'Oracle SQL', 'PostgreSQL', 'Git'],
+      date: 'Nov 2024 — Apr 2025',
+      type: 'work',
+      summary:
+        'Built production features for enterprise banking applications with .NET Core, Angular, Oracle SQL and PostgreSQL in an Agile team.',
+      highlights: [
+        'Practised test-driven development with xUnit on production modules.',
+        'Refactored a shared Angular component library, removing 30% of repeated code across modules.',
+        'Took part in code reviews and sprint planning with senior engineers.',
+      ],
+      skills: ['.NET Core', 'C#', 'Angular', 'TypeScript', 'xUnit', 'TDD', 'Oracle SQL', 'PostgreSQL'],
     },
     {
       id: 2,
       img: 'https://ik.imagekit.io/eddytools/ET-Website/Logo/ET-Logo-small_AL9eeqySIe.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1617814603239',
       role: 'Web Development Intern',
       company: 'EddyTools Tech. Solution',
-      date: 'Sep 2022 - Dec 2022',
-      desc: 'Designed and implemented dynamic, responsive web applications utilizing Node.js for server-side development. Leveraged Next.js to enhance performance and scalability. Successfully developed and deployed several websites including a comprehensive blog platform for a client.',
-      skills: ['JavaScript', 'GitHub', 'Node.js', 'GitLab', 'HTML', 'CSS'],
+      date: 'Sep 2022 — Dec 2022',
+      type: 'work',
+      summary: 'Designed and shipped dynamic, responsive web applications for clients.',
+      highlights: [
+        'Built server-side features with Node.js and used Next.js for performance and scalability.',
+        'Developed and deployed several client websites, including a full blog platform.',
+      ],
+      skills: ['JavaScript', 'Node.js', 'Next.js', 'HTML', 'CSS', 'GitLab'],
     },
     {
       id: 3,
       img: 'https://ik.imagekit.io/eddytools/ET-Website/Logo/ET-Logo-small_AL9eeqySIe.jpg?ik-sdk-version=javascript-1.4.3&updatedAt=1617814603239',
       role: 'AI Development Intern',
       company: 'EddyTools Tech. Solution',
-      date: 'Jan 2022 - May 2022',
-      desc: 'Successfully built six AI-driven projects — drone surveillance system, aruco scanner, drowsiness detection, speed detection, road sign language detector, and smart attendance system.',
-      skills: ['Python', 'OpenCV', 'Flask', 'ArucoMarkers', 'NLP', 'NumPy', 'Pandas'],
+      date: 'Jan 2022 — May 2022',
+      type: 'work',
+      summary: 'Where it started: six computer-vision and AI projects in five months.',
+      highlights: [
+        'Drone surveillance, ArUco marker scanning, drowsiness detection, speed detection, road-sign detection and a smart attendance system.',
+      ],
+      skills: ['Python', 'OpenCV', 'Flask', 'ArUco', 'NLP', 'NumPy', 'Pandas'],
     },
     {
       id: 4,
-      img: 'https://www.clipartmax.com/png/middle/219-2197822_research-paper-flat-icon.png',
-      role: 'Research Paper',
-      company: 'Saraswati College of Engineering Kharghar',
+      img: 'https://cdn.simpleicons.org/googlescholar/4285F4',
+      role: 'Research Paper — Cultivate',
+      company: 'National Conference on Industry 4.0',
       date: '2024',
-      desc: 'Led the development of Cultivate, a pioneering web-based platform integrating machine learning and deep learning for precision agriculture. Implemented and compared five key algorithms, identifying XGBoost as the most accurate predictor.',
-      skills: ['Python', 'NLP', 'XGBoost', 'SKLearn', 'Flask', 'Documentation', 'NumPy', 'Pandas'],
+      type: 'research',
+      summary:
+        'Led Cultivate, a web platform applying machine learning and deep learning to precision agriculture.',
+      highlights: ['Implemented and compared five algorithms; XGBoost was the most accurate predictor (98.6%).'],
+      skills: ['Python', 'XGBoost', 'scikit-learn', 'Flask', 'Research'],
     },
     {
       id: 5,
       img: 'https://rcsaraswaticollege.wordpress.com/wp-content/uploads/2021/07/exdd4674.png?w=1024',
       role: 'Vice President',
       company: 'Rotaract Club of Saraswati College',
-      date: 'June 2023 - June 2024',
-      desc: 'Led flagship projects like Maitri 7.0 and Saraswati Open 2024. Managed end-to-end project planning, budgeting, and execution. Guided and trained the new Board of Directors, building strong relationships with parent rotary members and district authorities.',
-      skills: ['Leadership', 'Project Management', 'Team Building', 'Communication', 'Marketing', 'Event Management'],
+      date: 'Jun 2023 — Jun 2024',
+      type: 'leadership',
+      summary: 'Led flagship projects such as Maitri 7.0 and Saraswati Open 2024.',
+      highlights: [
+        'Owned end-to-end planning, budgeting and execution.',
+        'Trained the incoming Board of Directors and worked with Rotary and district leadership.',
+      ],
+      skills: ['Leadership', 'Project Management', 'Communication', 'Event Management'],
+    },
+  ],
+
+  projects: [
+    {
+      id: 0,
+      title: 'CrediSense',
+      tagline: 'AI credit analyst for lenders',
+      date: 'Nov 2026',
+      featured: true,
+      description:
+        "CrediSense turns a borrower's documents into a decision-ready credit file. It covers secure document collection, a data room, GST-vs-bank reconciliation, legal and sanctions screening, early-warning alerts, credit-policy checks, an editable AI credit memo, and an AI analyst that answers with cited sources.",
+      highlights: [
+        'AI analyst that answers with cited sources; falls back to a smaller model, then to rules-based answers, when limits hit.',
+        'Deterministic analysis pipeline: reconcile → ratios → policy → alerts → risk scorecard with guard-rails. Nothing is invented — missing data stays empty.',
+        'Role-based access (admin, credit officer, borrower) enforced on the server for every page and API route.',
+        'Single-recipient, hashed, expiring invite links; scrypt passwords, CSRF origin checks, rate limits and a full audit log.',
+        'Layered architecture with ESLint-enforced boundaries; Vitest unit and Playwright end-to-end suites in CI.',
+      ],
+      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/CrediSense',
+      tags: ['Next.js 15', 'React 19', 'TypeScript', 'Groq LLM', 'PostgreSQL · Neon', 'Tailwind', 'Playwright'],
+      kinds: ['ai', 'fullstack'],
+      github: 'https://github.com/rushikeshchavan-7/CrediSense',
+      webapp: 'https://credisense-rushi.vercel.app/',
+      media: {
+        video: {
+          mp4: '/work/credisense/credisense-tour.mp4',
+          webm: '/work/credisense/credisense-tour.webm',
+          poster: '/work/credisense/credisense-tour-poster.webp',
+        },
+        gallery: [
+          { src: '/work/credisense/pipeline.webp', title: 'Credit pipeline', caption: 'Every borrower, ask, risk grade and status at a glance.' },
+          { src: '/work/credisense/overview.webp', title: 'Borrower overview', caption: 'Company profile, key ratios and a weighted risk scorecard.' },
+          { src: '/work/credisense/warnings.webp', title: 'Early warnings', caption: 'Signals from GST, banking, bureau and courts, ranked by severity.' },
+          { src: '/work/credisense/financials.webp', title: 'Financials', caption: 'Three-year statements with ratios computed automatically.' },
+          { src: '/work/credisense/legal.webp', title: 'Legal & risk checks', caption: 'Court cases, PEP, sanctions and AML screening for every director.' },
+          { src: '/work/credisense/ask.webp', title: 'Ask Sense AI', caption: 'Answers grounded in the data room, with every figure cited.' },
+        ],
+      },
+    },
+    {
+      id: 1,
+      title: 'DocuMind',
+      tagline: 'Chat with your documents',
+      date: 'Feb 2026',
+      description:
+        'RAG-based document intelligence platform. Upload PDF, DOCX, PPTX, XLSX or TXT files and chat with them — answers come strictly from document content, not general knowledge.',
+      highlights: [
+        'Semantic search across every uploaded document.',
+        'Multiple chat sessions per document and an analytics dashboard.',
+        'AES-256 encryption for stored files.',
+      ],
+      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/DocuMind',
+      tags: ['Angular', '.NET Core', 'FastAPI', 'LangChain', 'ChromaDB', 'PostgreSQL'],
+      kinds: ['ai', 'fullstack'],
+      github: 'https://github.com/rushikeshchavan-7/DocuMind',
+      webapp: 'https://documind-rag.netlify.app/auth',
+    },
+    {
+      id: 2,
+      title: 'Cultivate 365',
+      tagline: 'AI for precision agriculture',
+      date: 'Mar 2024',
+      description:
+        'AI-powered precision agriculture platform backed by a research paper at the National Conference on Industry 4.0. Crop and fertiliser recommendations from soil data, leaf-disease detection, a weather dashboard and a Gemini chatbot.',
+      highlights: [
+        'Compared five ML algorithms — XGBoost proved most accurate at 98.6%.',
+        'Leaf-disease detection with a ResNet9 model.',
+        'Multi-language (English, Hindi, Marathi) and installable as a PWA.',
+      ],
+      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/Cultivate',
+      tags: ['Angular', 'FastAPI', 'PyTorch', 'XGBoost', 'scikit-learn', 'Gemini'],
+      kinds: ['ai', 'fullstack'],
+      github: 'https://github.com/rushikeshchavan-7/Cultivate',
+      webapp: 'https://cultivate365.netlify.app/',
+      researchPaper:
+        'https://www.linkedin.com/posts/rushikesh-chavan-275282211_its-been-a-year-since-i-published-my-research-activity-7309115888958431233-8x38',
+    },
+    {
+      id: 3,
+      title: 'KarmaKendra',
+      tagline: 'Jira-lite for study & tasks',
+      date: 'Aug 2025',
+      description:
+        'Production-ready study and task manager with a drag-and-drop Kanban board, Google Sheets sync, Pomodoro timer and progress dashboard.',
+      highlights: [
+        'Offline-first with IndexedDB.',
+        'Keyboard shortcuts, smart quick-create parsing and focus mode.',
+      ],
+      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/StudyManager',
+      tags: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Zustand', 'Sheets API'],
+      kinds: ['fullstack', 'tools'],
+      github: 'https://github.com/rushikeshchavan-7/StudyManager',
+      webapp: 'https://rushi-study-manager.netlify.app/',
+    },
+    {
+      id: 4,
+      title: 'This portfolio',
+      tagline: 'Angular 21, zoneless & signals',
+      date: 'Nov 2026',
+      description:
+        'The site you are on. Angular 21 standalone components with signals, a canvas neural-field hero, a command palette (⌘K), scroll-driven reveals and a token-based dark/light theme.',
+      highlights: ['No UI library — hand-built design system in SCSS.', 'Respects reduced-motion preferences.'],
+      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/portfolio-angular',
+      tags: ['Angular 21', 'TypeScript', 'Signals', 'SCSS', 'Canvas'],
+      kinds: ['tools'],
+      github: 'https://github.com/rushikeshchavan-7/portfolio-angular',
+      webapp: 'https://rushikesh-chavan-portfolio.netlify.app/',
     },
   ],
 
@@ -344,7 +567,6 @@ export const siteConfig: SiteConfig = {
       degree: 'SSC(X), Semi-English Medium',
     },
   ],
-
   certificates: [
     {
       id: 0,
@@ -453,58 +675,6 @@ export const siteConfig: SiteConfig = {
       image: 'https://www.w3.org/html/logo/badge/html5-badge-h-solo.png',
       link: 'https://trainings.internshala.com/s/v/674485/6ceba24f',
       skills: ['HTML', 'CSS', 'JavaScript'],
-    },
-  ],
-
-  projects: [
-    {
-      id: 0,
-      title: 'DocuMind',
-      date: 'Feb 2026',
-      description:
-        'RAG-based document intelligence platform. Upload PDF, DOCX, PPTX, XLSX, TXT files and chat with them — answers come strictly from document content, not general knowledge. Features smart semantic search across all documents, analytics dashboard, multiple chat sessions per document, and AES-256 encryption for stored files.',
-      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/DocuMind',
-      tags: ['Angular', '.NET Core', 'Python', 'FastAPI', 'LangChain', 'ChromaDB', 'PostgreSQL'],
-      category: 'web app',
-      github: 'https://github.com/rushikeshchavan-7/DocuMind',
-      webapp: 'https://documind-rag.netlify.app/auth',
-    },
-    {
-      id: 1,
-      title: 'Cultivate 365',
-      date: 'Mar 2024',
-      description:
-        'AI-powered precision agriculture platform with a published research paper at the National Conference on Industry 4.0. Compared five ML algorithms — XGBoost proved most accurate (98.6%). Features crop and fertilizer recommendation from soil data, leaf disease detection via ResNet9, weather dashboard, Gemini AI chatbot, and multi-language support (EN/HI/MR). PWA-enabled.',
-      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/Cultivate',
-      tags: ['Angular', 'FastAPI', 'PyTorch', 'XGBoost', 'scikit-learn', 'Google Gemini'],
-      category: 'web app',
-      github: 'https://github.com/rushikeshchavan-7/Cultivate',
-      webapp: 'https://cultivate365.netlify.app/',
-      researchPaper: 'https://www.linkedin.com/posts/rushikesh-chavan-275282211_its-been-a-year-since-i-published-my-research-activity-7309115888958431233-8x38',
-    },
-    {
-      id: 2,
-      title: 'KarmaKendra',
-      date: 'Aug 2025',
-      description:
-        'Production-ready study and task management app (Jira-lite) with drag-and-drop Kanban board, Google Sheets sync, Pomodoro timer, and progress dashboard. Offline-first with IndexedDB, keyboard shortcuts, quick-create with smart parsing, focus mode, and dark mode.',
-      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/StudyManager',
-      tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Zustand', 'Google Sheets API'],
-      category: 'web app',
-      github: 'https://github.com/rushikeshchavan-7/StudyManager',
-      webapp: 'https://rushi-study-manager.netlify.app/',
-    },
-    {
-      id: 3,
-      title: 'Developer Portfolio',
-      date: 'Jan 2025',
-      description:
-        'Modern, responsive developer portfolio built with Angular 21 and TypeScript. Features dark/light theme toggle, glass-morphism UI, smooth scroll animations, section-based layout with hero, skills, experience, projects, education, certificates, and contact sections.',
-      image: 'https://opengraph.githubassets.com/1/rushikeshchavan-7/portfolio-angular',
-      tags: ['Angular', 'TypeScript', 'SCSS'],
-      category: 'web app',
-      github: 'https://github.com/rushikeshchavan-7/portfolio-angular',
-      webapp: 'https://rushikesh-chavan-portfolio.netlify.app/',
     },
   ],
 };

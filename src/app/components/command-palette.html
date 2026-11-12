@@ -1,0 +1,55 @@
+@if (open()) {
+  <div class="overlay" (click)="close()"></div>
+  <div class="palette" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="search">
+      <app-icon name="search" [size]="18" />
+      <input
+        #q
+        type="text"
+        placeholder="Jump to a section, project or link…"
+        autocomplete="off"
+        spellcheck="false"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="cp-list"
+        [attr.aria-activedescendant]="results().length ? 'cp-' + cursor() : null"
+        [value]="query()"
+        (input)="setQuery($any($event.target).value)"
+      />
+      <kbd class="mono">esc</kbd>
+    </div>
+
+    <div class="list" id="cp-list" role="listbox" #list>
+      @for (g of grouped(); track g.group) {
+        <p class="group mono">{{ g.group }}</p>
+        @for (it of g.items; track it.cmd.id) {
+          <button
+            type="button"
+            class="item"
+            role="option"
+            [id]="'cp-' + it.index"
+            [attr.data-index]="it.index"
+            [attr.aria-selected]="cursor() === it.index"
+            [class.active]="cursor() === it.index"
+            (mousemove)="cursor() !== it.index && cursor.set(it.index)"
+            (click)="execute(it.cmd)"
+          >
+            <span class="ic"><app-icon [name]="it.cmd.icon" [size]="16" /></span>
+            <span class="label">{{ it.cmd.label }}</span>
+            @if (it.cmd.hint) { <span class="hint">{{ it.cmd.hint }}</span> }
+            <span class="enter mono" aria-hidden="true">↵</span>
+          </button>
+        }
+      } @empty {
+        <p class="none">No results for “{{ query() }}”.</p>
+      }
+    </div>
+
+    <div class="foot mono">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> select</span>
+      <span class="spacer"></span>
+      <span><kbd>⌘</kbd><kbd>K</kbd> toggle</span>
+    </div>
+  </div>
+}

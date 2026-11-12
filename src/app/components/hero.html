@@ -1,66 +1,48 @@
 <section class="hero" id="about">
-  <div class="hero-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="top-line"></div>
+  <div class="aura" aria-hidden="true"></div>
+
+  <div class="container intro">
+    <div class="avatar rise" style="--d: 0ms">
+      <span class="avatar-glow" aria-hidden="true"></span>
+      <span class="avatar-ring" aria-hidden="true"></span>
+      <img [src]="hero.image" [alt]="hero.name" width="96" height="96" fetchpriority="high" />
+    </div>
+
+    <p class="name rise" style="--d: 80ms">{{ hero.name }}</p>
+
+    <h1 class="title rise" style="--d: 160ms">
+      {{ hero.headline }}<br />
+      <span class="spectrum-text">{{ hero.motto }}</span>
+    </h1>
+
+    <p class="desc rise" style="--d: 260ms">{{ hero.description }}</p>
+
+    <div class="cta rise" style="--d: 360ms">
+      @if (resume) {
+        <a class="btn btn-primary" [href]="resume.url" target="_blank" rel="noopener noreferrer">{{ resume.label }}</a>
+      }
+      <a class="more-link" href="#projects" (click)="go('projects', $event)">See my work</a>
+    </div>
+
+    <div class="meta rise" style="--d: 440ms">
+      <span class="status"><span class="dot"></span>{{ hero.statusBadge }}</span>
+      @for (s of socials; track s.label) {
+        <a class="social" [href]="s.url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="s.label">
+          @if (s.icon) { <app-icon [name]="s.icon" [size]="16" [stroke]="1.6" /> }
+          <span>{{ s.label }}</span>
+        </a>
+      }
+    </div>
   </div>
 
-  <div class="hero-content">
-    <div class="avatar-wrap">
-      <img
-        [src]="avatarSrc"
-        [alt]="hero.name"
-        class="avatar"
-      />
-    </div>
-
-    <div class="status-badge">
-      <span class="status-dot"></span>
-      {{ hero.statusBadge }}
-    </div>
-
-    <h1 class="name">{{ hero.name }}</h1>
-    <p class="role"><span class="c1">{{ hero.tagline }}</span> · <span class="text-tertiary">{{ hero.roles }}</span></p>
-    <p class="description">{{ hero.description }}</p>
-
-    <div class="stats">
-      @for (stat of hero.stats; track stat.label) {
+  <div class="container">
+    <dl class="stats" #stats reveal>
+      @for (s of hero.stats; track s.label; let i = $index) {
         <div class="stat">
-          <span class="stat-value" [style.color]="getStatColor(stat.color)">{{ stat.value }}</span>
-          <span class="stat-label">{{ stat.label }}</span>
+          <dt>{{ s.label }}</dt>
+          <dd>{{ formatStat(i) }}</dd>
         </div>
       }
-    </div>
-
-    <div class="buttons">
-      @for (btn of hero.buttons; track btn.label) {
-        @if (btn.type === 'primary') {
-          <a [href]="btn.url" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            {{ btn.label }}
-          </a>
-        } @else {
-          <a
-            [href]="btn.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-color"
-            [style.--btn-color]="btn.color || '#666'"
-          >
-            {{ btn.label }}
-          </a>
-        }
-      }
-    </div>
-
-    <div class="tech-stack">
-      @for (tech of hero.techStack; track tech) {
-        <span class="tech-tag">{{ tech }}</span>
-      }
-    </div>
-
-    <div class="scroll-hint">
-      <span class="scroll-text">Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
+    </dl>
   </div>
 </section>

@@ -1,0 +1,37 @@
+<section class="section" id="capabilities">
+  <div class="container">
+    <header class="section-head" reveal>
+      <span class="eyebrow">Expertise</span>
+      <h2 class="h2">Every layer of the product.<br /><span class="dim">One person.</span></h2>
+    </header>
+
+    <div class="bento">
+      @for (c of caps; track c.id; let i = $index) {
+        <article class="card tile" [attr.data-size]="c.size" spotlight reveal [revealDelay]="(i % 3) * 80">
+          <span class="tile-icon" [class.spectrum]="c.size === 'xl'"><app-icon [name]="c.icon" [size]="c.size === 'xl' ? 30 : 24" [stroke]="1.5" /></span>
+
+          <h3 class="tile-title">{{ c.title }}</h3>
+          <p class="tile-summary">{{ c.summary }}</p>
+
+          @if (c.examples?.length) {
+            <ul class="examples">
+              @for (ex of c.examples; track ex.title) {
+                <li>
+                  <span class="ex-title">{{ ex.title }}</span>
+                  <span class="ex-detail">{{ ex.detail }}</span>
+                  <span class="ex-proj">{{ ex.project }}</span>
+                </li>
+              }
+            </ul>
+          }
+
+          <p class="stack">
+            @for (s of c.skills; track s.name; let last = $last) {
+              <span>{{ s.name }}</span>@if (!last) {<span class="sep" aria-hidden="true"> · </span>}
+            }
+          </p>
+        </article>
+      }
+    </div>
+  </div>
+</section>

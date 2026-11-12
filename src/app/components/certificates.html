@@ -1,60 +1,44 @@
-<section id="certificates" class="certificates-section">
-  <div class="section-header">
-    <h2>Certificates</h2>
-    <p class="subtitle">Professional certifications and courses completed</p>
-  </div>
+<section class="section" id="certificates">
+  <div class="container">
+    <header class="section-head" reveal>
+      <span class="eyebrow">Certificates</span>
+      <h2 class="h2">Always learning.</h2>
+      <p class="lead">From LangGraph and prompt engineering to DSA, databases and industry simulations.</p>
+    </header>
 
-  <div class="grid">
-    <a
-      *ngFor="let cert of certs"
-      class="cert-card"
-      [href]="cert.link !== '#' ? cert.link : null"
-      [target]="cert.link !== '#' ? '_blank' : null"
-      rel="noopener noreferrer"
-    >
-      <!-- Preview area -->
-      <div class="card-preview">
-        <!-- Image card: always rendered, looks intentional -->
-        <div class="image-card">
-          <img
-            [src]="cert.image || cert.fallbackImg"
-            [alt]="cert.issuer"
-            loading="lazy"
-            (error)="onImgError($event, cert)"
-          />
-          <div class="image-label">
-            <span class="image-issuer">{{ cert.issuer }}</span>
+    <div class="grid">
+      @for (c of shown(); track c.id; let i = $index) {
+        <a
+          class="card cert"
+          [href]="c.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          spotlight
+          reveal
+          [revealDelay]="(i % 6) * 50"
+        >
+          <div class="top">
+            <span class="logo" [attr.data-initials]="initials(c.issuer)">
+              <img [src]="c.image" [alt]="" loading="lazy" (error)="imgError($event)" />
+            </span>
+            @if (isAi(c)) { <span class="ai-tag">AI</span> }
+            <app-icon name="arrow-up-right" [size]="16" class="arrow" />
           </div>
-        </div>
+          <h3 class="title">{{ c.title }}</h3>
+          <p class="issuer">{{ c.issuer }} <span class="dot">·</span> <span>{{ c.date }}</span></p>
+          <div class="tags">
+            @for (s of c.skills; track s) { <span class="chip">{{ s }}</span> }
+          </div>
+        </a>
+      }
+    </div>
 
-        <!-- Drive iframe: only for Google Drive certs (guaranteed to work) -->
-        <iframe
-          *ngIf="cert.isDrive"
-          class="drive-frame"
-          [src]="cert.embedUrl"
-          [title]="cert.title"
-          frameborder="0"
-          loading="lazy"
-          sandbox="allow-scripts allow-same-origin allow-popups"
-        ></iframe>
-
-        <!-- Hover overlay -->
-        <div class="hover-overlay">
-          <span class="view-btn">View Certificate ↗</span>
-        </div>
+    @if (total > initial) {
+      <div class="more">
+        <button type="button" class="btn btn-ghost" (click)="expanded.set(!expanded())" [attr.aria-expanded]="expanded()">
+          {{ expanded() ? 'Show fewer' : 'Show all ' + total + ' certificates' }}
+        </button>
       </div>
-
-      <!-- Card body -->
-      <div class="card-body">
-        <h3 class="card-title">{{ cert.title }}</h3>
-        <div class="card-meta">
-          <span class="issuer">{{ cert.issuer }}</span>
-          <span class="date">{{ cert.date }}</span>
-        </div>
-        <div class="card-skills">
-          <span *ngFor="let skill of cert.skills" class="skill-tag">{{ skill }}</span>
-        </div>
-      </div>
-    </a>
+    }
   </div>
 </section>
