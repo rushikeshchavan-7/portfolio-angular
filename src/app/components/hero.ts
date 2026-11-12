@@ -14,6 +14,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   readonly hero = siteConfig.hero;
   readonly resume = this.hero.buttons.find((b) => b.kind === 'primary');
   readonly socials = this.hero.buttons.filter((b) => b.kind !== 'primary');
+  readonly featured = siteConfig.projects.find((p) => p.featured) ?? null;
+  readonly trades = ['AI & LLMs', 'Backend', 'Frontend', 'Data & ML', 'Cloud & DevOps'];
 
   private statsRef = viewChild<ElementRef<HTMLElement>>('stats');
   private io?: IntersectionObserver;
