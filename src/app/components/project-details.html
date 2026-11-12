@@ -7,7 +7,14 @@
   </button>
 
   <div class="cover">
-    <img [src]="p.image" [alt]="p.title + ' preview'" />
+    @if (p.media?.video; as v) {
+      <video [poster]="v.poster" controls muted playsinline preload="metadata" [attr.aria-label]="p.title + ' walkthrough'">
+        @if (v.webm) { <source [src]="v.webm" type="video/webm" /> }
+        <source [src]="v.mp4" type="video/mp4" />
+      </video>
+    } @else {
+      <img [src]="p.image" [alt]="p.title + ' preview'" />
+    }
   </div>
 
   <div class="content">
@@ -25,6 +32,18 @@
       <ul class="points">
         @for (h of p.highlights; track h) { <li>{{ h }}</li> }
       </ul>
+    }
+
+    @if (p.media?.gallery?.length) {
+      <h3 class="sub">Screens</h3>
+      <div class="shots">
+        @for (g of p.media!.gallery; track g.src) {
+          <a [href]="g.src" target="_blank" rel="noopener" class="shot-thumb">
+            <img [src]="g.src" [alt]="g.title" loading="lazy" />
+            <span>{{ g.title }}</span>
+          </a>
+        }
+      </div>
     }
 
     <h3 class="sub">Stack</h3>
