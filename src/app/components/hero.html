@@ -10,7 +10,12 @@
         <span class="faint">{{ hero.location }}</span>
       </div>
 
-      <p class="hello rise" style="--d: 80ms">Hi, I'm {{ hero.firstName }} —</p>
+      <div class="hello rise" style="--d: 80ms">
+        <span class="avatar">
+          <img [src]="hero.image" [alt]="hero.name" width="56" height="56" />
+        </span>
+        <p>Hi, I'm <strong>{{ hero.firstName }}</strong> —</p>
+      </div>
 
       <h1 class="title rise" style="--d: 140ms">
         <span class="grad-text">{{ hero.headline }}</span><br />
@@ -49,13 +54,8 @@
     </div>
 
     <div class="visual rise" style="--d: 260ms">
-      <div class="portrait">
-        <div class="ring" aria-hidden="true"></div>
-        <img [src]="hero.image" [alt]="hero.name" width="420" height="392" fetchpriority="high" />
-        <div class="portrait-shade" aria-hidden="true"></div>
-        <div class="float-chip chip-ai"><app-icon name="sparkle" [size]="14" /> AI-first</div>
-        <div class="float-chip chip-stack"><app-icon name="layout" [size]="14" /> Full-stack</div>
-      </div>
+      <div class="float-chip chip-ai"><app-icon name="sparkle" [size]="14" /> AI-first</div>
+      <div class="float-chip chip-stack"><app-icon name="layout" [size]="14" /> Full-stack</div>
 
       <div class="console" role="img" aria-label="Illustration: an agent planning an end-to-end AI product across model, API, UI, data and deployment layers">
         <div class="console-bar">
