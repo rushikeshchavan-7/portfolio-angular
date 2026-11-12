@@ -150,7 +150,7 @@ export const siteConfig: SiteConfig = {
     ],
     description:
       'Software Engineer at CareEdge building enterprise banking platforms for lenders across India, Bhutan and Sri Lanka. I design with AI at the core, and I ship the whole stack around it — models, APIs, interfaces, data and infrastructure — from the first requirement to production.',
-    image: '/HeroImage.jpg',
+    image: '/avatar.webp',
     statusBadge: 'Software Engineer @ CareEdge',
     location: 'India',
     stats: [
