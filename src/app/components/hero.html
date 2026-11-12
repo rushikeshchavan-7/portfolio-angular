@@ -1,105 +1,48 @@
 <section class="hero" id="about">
-  <app-neural-field />
+  <div class="aura" aria-hidden="true"></div>
 
-  <div class="container hero-grid">
-    <div class="copy">
-      <div class="badge rise" style="--d: 0ms">
-        <span class="pulse"></span>
-        {{ hero.statusBadge }}
-        <span class="sep"></span>
-        <span class="faint">{{ hero.location }}</span>
-      </div>
-
-      <div class="hello rise" style="--d: 80ms">
-        <span class="avatar">
-          <img [src]="hero.image" [alt]="hero.name" width="56" height="56" />
-        </span>
-        <p>Hi, I'm <strong>{{ hero.firstName }}</strong> —</p>
-      </div>
-
-      <h1 class="title rise" style="--d: 140ms">
-        <span class="grad-text">{{ hero.headline }}</span><br />
-        <span class="title-2">across the entire stack.</span>
-      </h1>
-
-      <p class="motto rise" style="--d: 220ms">
-        <span class="mono slash">//</span> {{ hero.motto }}
-      </p>
-
-      <p class="typer rise" style="--d: 280ms" aria-live="off">
-        <span class="mono prompt">I build</span>
-        <span class="typed">{{ typed() }}</span><span class="caret" aria-hidden="true"></span>
-      </p>
-
-      <p class="desc rise" style="--d: 340ms">{{ hero.description }}</p>
-
-      <div class="cta rise" style="--d: 420ms">
-        @for (b of hero.buttons; track b.label) {
-          <a
-            class="btn"
-            [class.btn-primary]="b.kind === 'primary'"
-            [class.btn-ghost]="b.kind === 'ghost'"
-            [href]="b.url"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            @if (b.icon) { <app-icon [name]="b.icon" [size]="16" /> }
-            {{ b.label }}
-          </a>
-        }
-        <button type="button" class="btn btn-ghost see-work" (click)="go('projects')">
-          See work <app-icon name="arrow-right" [size]="15" />
-        </button>
-      </div>
+  <div class="container intro">
+    <div class="avatar rise" style="--d: 0ms">
+      <span class="avatar-glow" aria-hidden="true"></span>
+      <span class="avatar-ring" aria-hidden="true"></span>
+      <img [src]="hero.image" [alt]="hero.name" width="96" height="96" fetchpriority="high" />
     </div>
 
-    <div class="visual rise" style="--d: 260ms">
-      <div class="float-chip chip-ai"><app-icon name="sparkle" [size]="14" /> AI-first</div>
-      <div class="float-chip chip-stack"><app-icon name="layout" [size]="14" /> Full-stack</div>
+    <p class="name rise" style="--d: 80ms">{{ hero.name }}</p>
 
-      <div class="console" role="img" aria-label="Illustration: an agent planning an end-to-end AI product across model, API, UI, data and deployment layers">
-        <div class="console-bar">
-          <span class="dots"><i></i><i></i><i></i></span>
-          <span class="mono console-title">rushikesh.agent</span>
-          <span class="mono live" [class.on]="!consoleDone()">● {{ consoleDone() ? 'done' : 'running' }}</span>
-        </div>
-        <div class="console-body mono">
-          <p class="cmd"><span class="accent">›</span> plan <span class="str">"ship an AI product end-to-end"</span></p>
-          @for (l of consoleLines; track l.key; let i = $index) {
-            <p class="line" [class.shown]="i < shownLines()">
-              <span class="ok">✓</span>
-              <span class="k">{{ l.key }}</span>
-              <span class="v">{{ l.value }}</span>
-            </p>
-          }
-          <p class="line done" [class.shown]="consoleDone()">
-            <span class="ok">●</span><span class="k">status</span><span class="v hl">shipped to production</span>
-          </p>
-        </div>
-      </div>
+    <h1 class="title rise" style="--d: 160ms">
+      {{ hero.headline }}<br />
+      <span class="spectrum-text">{{ hero.motto }}</span>
+    </h1>
+
+    <p class="desc rise" style="--d: 260ms">{{ hero.description }}</p>
+
+    <div class="cta rise" style="--d: 360ms">
+      @if (resume) {
+        <a class="btn btn-primary" [href]="resume.url" target="_blank" rel="noopener noreferrer">{{ resume.label }}</a>
+      }
+      <a class="more-link" href="#projects" (click)="go('projects', $event)">See my work</a>
+    </div>
+
+    <div class="meta rise" style="--d: 440ms">
+      <span class="status"><span class="dot"></span>{{ hero.statusBadge }}</span>
+      @for (s of socials; track s.label) {
+        <a class="social" [href]="s.url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="s.label">
+          @if (s.icon) { <app-icon [name]="s.icon" [size]="16" [stroke]="1.6" /> }
+          <span>{{ s.label }}</span>
+        </a>
+      }
     </div>
   </div>
 
   <div class="container">
-    <dl class="stats" #stats>
+    <dl class="stats" #stats reveal>
       @for (s of hero.stats; track s.label; let i = $index) {
         <div class="stat">
-          <dt class="stat-label">{{ s.label }}</dt>
-          <dd class="stat-value">{{ formatStat(i) }}</dd>
+          <dt>{{ s.label }}</dt>
+          <dd>{{ formatStat(i) }}</dd>
         </div>
       }
     </dl>
-  </div>
-
-  <div class="marquee" aria-label="Technologies I work with">
-    <div class="marquee-track">
-      @for (round of [0, 1]; track round) {
-        <ul class="marquee-list" [attr.aria-hidden]="round === 1 ? 'true' : null">
-          @for (t of marquee; track t) {
-            <li><span class="diamond"></span>{{ t }}</li>
-          }
-        </ul>
-      }
-    </div>
   </div>
 </section>

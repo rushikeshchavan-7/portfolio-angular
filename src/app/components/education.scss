@@ -2,23 +2,19 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 
-  @media (max-width: 1000px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @media (max-width: 560px) { grid-template-columns: 1fr; }
 }
 
 .edu {
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: clamp(24px, 3vw, 36px);
 
-  &.primary { grid-column: span 2; }
 
-  &:hover { border-color: var(--border-strong); }
 
-  @media (max-width: 560px) { &.primary { grid-column: auto; } }
 }
 
 .top {
@@ -71,13 +67,12 @@
 
 .grade {
   font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 700;
   letter-spacing: -0.03em;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text);
 }
+
+.dim { color: var(--text-faint); }
 
 .note { font-size: 13px; color: var(--text-faint); }

@@ -2,7 +2,7 @@
   <div class="container">
     <header class="section-head" reveal>
       <span class="eyebrow">Certificates</span>
-      <h2 class="h2">Always <span class="grad-text">learning.</span></h2>
+      <h2 class="h2">Always learning.</h2>
       <p class="lead">From LangGraph and prompt engineering to DSA, databases and industry simulations.</p>
     </header>
 
@@ -21,11 +21,11 @@
             <span class="logo" [attr.data-initials]="initials(c.issuer)">
               <img [src]="c.image" [alt]="" loading="lazy" (error)="imgError($event)" />
             </span>
-            @if (isAi(c)) { <span class="ai-tag mono">AI</span> }
+            @if (isAi(c)) { <span class="ai-tag">AI</span> }
             <app-icon name="arrow-up-right" [size]="16" class="arrow" />
           </div>
           <h3 class="title">{{ c.title }}</h3>
-          <p class="issuer">{{ c.issuer }} <span class="dot">·</span> <span class="mono">{{ c.date }}</span></p>
+          <p class="issuer">{{ c.issuer }} <span class="dot">·</span> <span>{{ c.date }}</span></p>
           <div class="tags">
             @for (s of c.skills; track s) { <span class="chip">{{ s }}</span> }
           </div>

@@ -1,10 +1,9 @@
 <section class="section" id="contact">
   <div class="container">
-    <div class="card panel" spotlight reveal>
-      <div class="panel-glow" aria-hidden="true"></div>
-
+    <div class="card panel" reveal>
+      
       <span class="eyebrow">Contact</span>
-      <h2 class="h2 big">Let's build something<br /><span class="grad-text">intelligent.</span></h2>
+      <h2 class="h2 big">Let's build something<br /><span class="dim">remarkable.</span></h2>
       <p class="lead">{{ contact.subtitle }}</p>
 
       <div class="primary">
@@ -12,7 +11,7 @@
           <app-icon name="mail" [size]="17" /> Say hello
         </a>
         <button type="button" class="email" (click)="copyEmail()" [attr.aria-label]="'Copy email address ' + contact.email">
-          <span class="mono">{{ contact.email }}</span>
+          <span class="addr">{{ contact.email }}</span>
           <span class="copy" [class.done]="copied()">
             <app-icon [name]="copied() ? 'check' : 'copy'" [size]="15" />
           </span>

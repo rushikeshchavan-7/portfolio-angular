@@ -5,9 +5,9 @@ export interface NavSection {
 
 export const NAV_SECTIONS: NavSection[] = [
   { id: 'about', label: 'About' },
-  { id: 'capabilities', label: 'Capabilities' },
-  { id: 'experience', label: 'Experience' },
+  { id: 'capabilities', label: 'Expertise' },
   { id: 'projects', label: 'Work' },
+  { id: 'experience', label: 'Experience' },
   { id: 'education', label: 'Education' },
   { id: 'certificates', label: 'Certificates' },
   { id: 'contact', label: 'Contact' },

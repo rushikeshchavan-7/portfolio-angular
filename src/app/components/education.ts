@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { siteConfig } from '../services/config';
 import { RevealDirective } from '../shared/reveal.directive';
-import { SpotlightDirective } from '../shared/spotlight.directive';
 
 @Component({
   selector: 'app-education',
-  imports: [RevealDirective, SpotlightDirective],
+  imports: [RevealDirective],
   templateUrl: './education.html',
   styleUrl: './education.scss',
 })

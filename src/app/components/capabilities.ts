@@ -12,7 +12,6 @@ import { SpotlightDirective } from '../shared/spotlight.directive';
 })
 export class CapabilitiesComponent {
   readonly caps = siteConfig.capabilities;
-  readonly pipeline = ['Documents', 'Embed', 'Retrieve', 'Reason', 'Cited answer'];
 
   hideBroken(e: Event): void {
     (e.target as HTMLImageElement).style.display = 'none';

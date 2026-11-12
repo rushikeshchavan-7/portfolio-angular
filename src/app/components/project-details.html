@@ -11,12 +11,12 @@
   </div>
 
   <div class="content">
-    <p class="meta mono">
+    <p class="meta">
       <span>{{ p.date }}</span>
       @for (k of p.kinds; track k) { <span class="kind">{{ k === 'ai' ? 'AI' : k }}</span> }
     </p>
     <h2 id="pd-title" class="title">{{ p.title }}</h2>
-    <p class="tagline grad-text">{{ p.tagline }}</p>
+    <p class="tagline">{{ p.tagline }}.</p>
 
     <p class="desc">{{ p.description }}</p>
 

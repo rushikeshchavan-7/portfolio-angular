@@ -2,11 +2,10 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, signal, viewChild } fr
 import { siteConfig } from '../services/config';
 import { IconComponent } from '../shared/icon';
 import { RevealDirective } from '../shared/reveal.directive';
-import { SpotlightDirective } from '../shared/spotlight.directive';
 
 @Component({
   selector: 'app-experience',
-  imports: [IconComponent, RevealDirective, SpotlightDirective],
+  imports: [IconComponent, RevealDirective],
   templateUrl: './experience.html',
   styleUrl: './experience.scss',
   host: { '(window:scroll)': 'measure()', '(window:resize)': 'measure()' },
