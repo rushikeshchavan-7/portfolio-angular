@@ -63,6 +63,17 @@ export interface ProjectMember {
 
 export type ProjectKind = 'ai' | 'fullstack' | 'tools';
 
+export interface ProjectShot {
+  src: string;
+  title: string;
+  caption: string;
+}
+
+export interface ProjectMedia {
+  video?: { mp4: string; webm?: string; poster: string };
+  gallery: ProjectShot[];
+}
+
 export interface Project {
   id: number;
   title: string;
@@ -78,6 +89,7 @@ export interface Project {
   webapp: string;
   researchPaper?: string;
   member?: ProjectMember[];
+  media?: ProjectMedia;
 }
 
 export interface Certificate {
@@ -430,6 +442,21 @@ export const siteConfig: SiteConfig = {
       kinds: ['ai', 'fullstack'],
       github: 'https://github.com/rushikeshchavan-7/CrediSense',
       webapp: 'https://credisense-rushi.vercel.app/',
+      media: {
+        video: {
+          mp4: '/work/credisense/credisense-tour.mp4',
+          webm: '/work/credisense/credisense-tour.webm',
+          poster: '/work/credisense/credisense-tour-poster.webp',
+        },
+        gallery: [
+          { src: '/work/credisense/pipeline.webp', title: 'Credit pipeline', caption: 'Every borrower, ask, risk grade and status at a glance.' },
+          { src: '/work/credisense/overview.webp', title: 'Borrower overview', caption: 'Company profile, key ratios and a weighted risk scorecard.' },
+          { src: '/work/credisense/warnings.webp', title: 'Early warnings', caption: 'Signals from GST, banking, bureau and courts, ranked by severity.' },
+          { src: '/work/credisense/financials.webp', title: 'Financials', caption: 'Three-year statements with ratios computed automatically.' },
+          { src: '/work/credisense/legal.webp', title: 'Legal & risk checks', caption: 'Court cases, PEP, sanctions and AML screening for every director.' },
+          { src: '/work/credisense/ask.webp', title: 'Ask Sense AI', caption: 'Answers grounded in the data room, with every figure cited.' },
+        ],
+      },
     },
     {
       id: 1,

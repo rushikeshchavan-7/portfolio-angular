@@ -22,38 +22,65 @@
           </div>
         </div>
 
-        <!-- Product shot (illustrative, sample data) -->
-        <div class="shot" aria-hidden="true">
-          <div class="shot-glow"></div>
-          <div class="mock">
-            <div class="mock-bar">
-              <span class="dots"><i></i><i></i><i></i></span>
-              <span>Credit file — Sample borrower</span>
-            </div>
-            <div class="mock-body">
-              <div class="grade-card">
-                <span class="label">Risk grade</span>
-                <span class="grade">B+</span>
-                <span class="meter"><i style="width: 62%"></i></span>
-                <span class="sub">Moderate · 4 of 5 checks passed</span>
+        @if (f.media?.video; as v) {
+          <div class="shot">
+            <div class="shot-glow" aria-hidden="true"></div>
+            <div class="frame">
+              <div class="frame-bar" aria-hidden="true">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="url">credisense-rushi.vercel.app</span>
               </div>
-              <ul class="checks">
-                <li><span class="ok"></span>GST and bank receipts reconciled</li>
-                <li><span class="ok"></span>Sanctions screening clear</li>
-                <li><span class="warn"></span>One policy threshold flagged</li>
-                <li><span class="ok"></span>Credit memo drafted</li>
-              </ul>
-              <div class="chat">
-                <p class="q">What is driving the risk grade?</p>
-                <p class="a">
-                  Receivables grew faster than revenue and one covenant is close to its limit<sup>1</sup><sup>2</sup>.
-                  Liquidity is within policy.
-                </p>
-                <p class="cite"><span>1 balance-sheet.pdf</span><span>2 Policy rule 4.2</span></p>
-              </div>
+              <video
+                #tour
+                class="tour"
+                [poster]="v.poster"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-label="Screen recording: a walkthrough of CrediSense, from the credit pipeline to a cited AI answer"
+              >
+                @if (v.webm) { <source [src]="v.webm" type="video/webm" /> }
+                <source [src]="v.mp4" type="video/mp4" />
+              </video>
+              <button type="button" class="play" (click)="togglePlay()" [attr.aria-label]="playing() ? 'Pause walkthrough' : 'Play walkthrough'">
+                @if (playing()) {
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                } @else {
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>
+                }
+              </button>
             </div>
           </div>
-        </div>
+        }
+
+        @if (f.media?.gallery?.length) {
+          <div class="gallery">
+            <div class="gallery-head">
+              <h4 class="gallery-title">Take a closer look.</h4>
+              <div class="gallery-nav">
+                <button type="button" (click)="scrollGallery(-1)" aria-label="Previous screenshot">‹</button>
+                <button type="button" (click)="scrollGallery(1)" aria-label="Next screenshot">›</button>
+              </div>
+            </div>
+            <ul class="rail" #rail (scroll)="onRailScroll()">
+              @for (g of f.media!.gallery; track g.src; let gi = $index) {
+                <li class="slide">
+                  <a class="slide-img" [href]="g.src" target="_blank" rel="noopener" [attr.aria-label]="'Open full screenshot: ' + g.title">
+                    <img [src]="g.src" [alt]="'CrediSense — ' + g.title" loading="lazy" width="1600" height="1000" />
+                  </a>
+                  <p class="slide-cap"><strong>{{ g.title }}.</strong> {{ g.caption }}</p>
+                </li>
+              }
+            </ul>
+            <div class="dots-row" aria-hidden="true">
+              @for (g of f.media!.gallery; track g.src; let gi = $index) {
+                <span [class.on]="gi === slide()"></span>
+              }
+            </div>
+            <p class="note">Screens from the running app. Borrowers and figures are the app’s fictional sample data.</p>
+          </div>
+        }
 
         <ul class="f-facts">
           @for (h of f.highlights.slice(0, 3); track h) {
