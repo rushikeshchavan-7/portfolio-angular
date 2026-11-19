@@ -174,7 +174,7 @@ export const siteConfig: SiteConfig = {
     buttons: [
       {
         label: 'View résumé',
-        url: 'https://drive.google.com/file/d/12-VrBblQ0HpDmFgEyYUg999Mc14tPlSu/view?usp=sharing',
+        url: 'https://drive.google.com/file/d/1o3TzPZh0TLtcQsLNcLPoqlvmUMhlDAaG/view?usp=sharing',
         kind: 'primary',
         icon: 'resume',
       },
